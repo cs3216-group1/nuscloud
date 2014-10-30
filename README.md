@@ -7,7 +7,11 @@ Unified backend service for NUS Apps for:
 
 ##  Usage
 
-NUSCloudPlatform relies on the Oauth2.0 protocol for authentication and API Access - in particular, the implicit flow authentication - as implemented in the Javascript SDK at js-sdk/sdk.js is recommended.
+NUSCloudPlatform relies on the Oauth2.0 protocol for authentication and API Access
+
+Using the implicit flow authentication is recommended. 
+
+The included Javascript SDK at js-sdk/sdk.js might be helpful.
 
 ### Registration and Account
 
@@ -20,12 +24,15 @@ Users can view details of created apps at /account/appdetails
 ### Login
 
 The standard flow login endpoint is /login
+
 The implicit flow login endpoint is /loginImplicit
+
 Logout endpoint is at /logout
 
 ### API and Scope
 
 The included API endpoints are get and post to /me/info.
+
 These require 'info-read' and 'info-write' permissions respectively.
 
 ### Javascript SDK
