@@ -17,7 +17,8 @@ var express = require('express'),
     implicit = require('./implicit'),
     register = require('./register'),
     api = require('./api'),
-    cors = require('cors');
+    cors = require('cors'),
+    friends = require('./friends');
 // Express configuration
 
 var app = express();
@@ -77,6 +78,8 @@ app.post('/oauth/token', oauth2.token);
 app.get('/api/me/info', cors(corsOptions), api.userinfo);
 app.post('/api/me/info', cors(corsOptions), api.editinfo);
 
-app.get('/api/app/info', cors(corsOptions), client.name);
+app.get('/api/app/info', cors(corsOptions), client.info);
+
+app.get('/api/me/friends', cors(corsOptions), friends.dummyData);
 
 http.createServer(app).listen(3000);
