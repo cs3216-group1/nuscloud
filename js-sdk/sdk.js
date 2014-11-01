@@ -1,11 +1,12 @@
 
-var server_host = "http://nuscloud.jishnumohan.com";
+var server_host = "http://localhost:3000"
 var redirect_url = window.location.origin + "/blank.html"; //The popup window will redirect here on login
 //This can be a blank page on your app as the implementation in the SDK
 //will save the token and close the popup on successful auth
-var app_id = "your app id here"; //As per registration
+var app_id = "ej4Nf2ID8IH1"; //As per registration
+var permissions = "info-read info-write friends-read";
 
-var Sdk = function(host, redirect_url, app_id){
+var Sdk = function(host, redirect_url, app_id, permissions){
     
     var existing_cookie = get_cookie("SDK_" + app_id);
     if(existing_cookie && existing_cookie != " "){ 
@@ -14,7 +15,7 @@ var Sdk = function(host, redirect_url, app_id){
     this.login = function(){
         var url = host + "/authImplicit?client_id=" + app_id + 
                     "&redirect_uri=" + redirect_url + "&scope=" +
-                    encodeURIComponent("info-read info-write");
+                    encodeURIComponent(permissions);
         var login_window = window.open(url, "Oauth-Login", "width=800, height=400");
 
         var pollTimer = window.setInterval(function(){
@@ -145,6 +146,4 @@ var Sdk = function(host, redirect_url, app_id){
 
 }
 
-var sdk = new Sdk(server_host, redirect_url, app_id);
-
-
+var sdk = new Sdk(server_host, redirect_url, app_id, permissions);
