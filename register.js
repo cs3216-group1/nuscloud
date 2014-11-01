@@ -22,10 +22,14 @@ exports.registerUser = function(req, res){
         } else {
             db.users.save(username, password, name, userId, 
                 function(err, user){
-                    res.status(201).send({
-                        username: user.username,
-                        name: user.name
-                    }); //Check this
+                    if (err) { throw err; }
+                    req.logIn(user, function(err) {
+                        if (err) { throw err; }
+                        return res.status(201).send({
+                            username: user.username,
+                            name: user.name
+                        }); //Check this
+                    });
                 }
             );
         }
