@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/humer');
+var config = require('../config');
+
+mongoose.connect('mongodb://' + config.mongo.host + config.mongo.db,
+    {user: config.mongo.username, pass: config.mongo.password});
 
 exports.users = require('./users');
 exports.clients = require('./clients');
