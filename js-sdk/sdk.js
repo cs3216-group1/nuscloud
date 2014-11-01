@@ -52,14 +52,14 @@ var Sdk = function(host, redirect_url, app_id){
     }
 
     this.get = function(api_path){
-        return ajax.get(host + "/" + api_path, {}, function(res){
+        return ajax.get(host + "/api/" + api_path, {}, function(res){
             console.log(res);
             return res;
         });
     }
 
     this.post = function(api_path, data){
-        return ajax.post(host + "/" + api_path, data, function(res){
+        return ajax.post(host + "/api/" + api_path, data, function(res){
             console.log(res);
             return res;
         });
