@@ -1,10 +1,10 @@
 
-var server_host = "http://localhost:3000"
+var server_host = "nuscloud.jishnumohan.com"
 var redirect_url = window.location.origin + "/blank.html"; //The popup window will redirect here on login
 //This can be a blank page on your app as the implementation in the SDK
 //will save the token and close the popup on successful auth
-var app_id = "ej4Nf2ID8IH1"; //As per registration
 var permissions = "friends-read";
+var app_id = "VucFTLGq7wM3"; //As per registration
 
 var Sdk = function(host, redirect_url, app_id, permissions){
     
