@@ -74,11 +74,9 @@ app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);
 app.post('/oauth/token', oauth2.token);
 
+app.get('/api/me/info', cors(corsOptions), api.userinfo);
+app.post('/api/me/info', cors(corsOptions), api.editinfo);
 
-app.get('/api/userinfo', cors(corsOptions), user.info);
-app.get('/api/clientinfo', cors(corsOptions), client.info);
-
-app.get('/me/info', cors(corsOptions), api.userinfo);
-app.post('/me/info', cors(corsOptions), api.editinfo);
+app.get('/api/app/info', cors(corsOptions), client.name);
 
 http.createServer(app).listen(3000);
