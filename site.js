@@ -30,7 +30,7 @@ exports.account = [
 exports.appdetails = [
     login.ensureLoggedIn(),
     function(req, res){
-        db.clients.findByUserId(req.user.Id, function(err, apps){
+        db.clients.findByUserId(req.user.userId, function(err, apps){
             res.render('appdetails', { apps: apps });
         });       
     }
