@@ -78,7 +78,16 @@ server.grant(oauth2orize.grant.token(function(client, user, ares, done) {
         if (err) { return done(err); }
         done(null, token);
     });
+    db.appUserData.exists(client.clientId, user.userId, function(err, exists){
+        if (err) { return done(err); }
+        if(!exists){
+            db.appUserData.create(client.clientId, user.userId, function(err, doc){
+                if (err) { return done(err); }
+            });
+        }
+    });
 }));
+
 
 // Exchange authorization codes for access tokens.  The callback accepts the
 // `client`, which is exchanging `code` and any `redirectURI` from the
@@ -197,7 +206,6 @@ exports.authorization = [
         if (!perm){
             db.permissions.save(userId, clientId, function(err, perm){
                 if(err) { throw err;}
-                console.log(perm.permissions);
                 return res.render('dialog', {
                     transactionID: req.oauth2.transactionID, 
                     user: req.user, 

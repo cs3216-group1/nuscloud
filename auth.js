@@ -76,7 +76,9 @@ passport.use(new BearerStrategy(
           db.users.findByUserId(token.userId, function(err, user) {
               if (err) { return done(err); }
               if (!user) { return done(null, false); }
-              var info = token.scope;
+              var scope = token.scope;
+              var clientId = token.clientId;
+              info = { scope: scope, clientId: clientId }; 
               done(null, user, info);
           });
       } else {
@@ -85,7 +87,9 @@ passport.use(new BearerStrategy(
           db.clients.findByClientId(token.clientId, function(err, client) {
              if(err) { return done(err); }
               if(!client) { return done(null, false); }
-              var info = token.scope;
+              var scope = token.scope;
+              var clientId = token.clientId;
+              info = { scope: scope, clientId: clientId }; 
               done(null, client, info);
           });
       }

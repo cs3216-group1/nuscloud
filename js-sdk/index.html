@@ -4,13 +4,14 @@
         <script src="./sdk.js"></script>
         <script>
         function example_post(){
-            return sdk.post('me/info', {'data': 'payload'});
+            return sdk.post('me/app/info', {'data': 'payload'});
         }
         </script>
     </head>
     <body>
         <button onclick="sdk.login()">Login</button>
-        <button onclick="sdk.get('me/info')">Info</button>
+        <button onclick="sdk.get('me/app/info')">Info</button>
+        <button onclick="sdk.get('me/app/')">All</button>
         <button onclick="sdk.get('me/friends')">Friends</button>
         <button onclick="example_post()">Update</button>
     </body>

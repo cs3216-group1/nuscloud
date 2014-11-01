@@ -4,7 +4,7 @@ var redirect_url = window.location.origin + "/blank.html"; //The popup window wi
 //This can be a blank page on your app as the implementation in the SDK
 //will save the token and close the popup on successful auth
 var app_id = "ej4Nf2ID8IH1"; //As per registration
-var permissions = "info-read info-write friends-read";
+var permissions = "friends-read";
 
 var Sdk = function(host, redirect_url, app_id, permissions){
     

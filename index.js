@@ -75,10 +75,13 @@ app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);
 app.post('/oauth/token', oauth2.token);
 
-app.get('/api/me/info', cors(corsOptions), api.userinfo);
-app.post('/api/me/info', cors(corsOptions), api.editinfo);
+app.get('/api/me/info', cors(corsOptions), api.getUserInfo);
+app.post('/api/me/info', cors(corsOptions), api.editUserInfo);
 
-app.get('/api/app/info', cors(corsOptions), client.info);
+app.get('/api/me/app/*', cors(corsOptions), api.getUserAppInfo);
+app.post('/api/me/app/*', cors(corsOptions), api.editUserAppInfo);
+
+app.get('/api/me/appinfo', cors(corsOptions), client.info);
 
 app.get('/api/me/friends', cors(corsOptions), friends.dummyData);
 
