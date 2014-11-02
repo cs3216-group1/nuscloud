@@ -25,10 +25,7 @@ exports.registerUser = function(req, res){
                     if (err) { throw err; }
                     req.logIn(user, function(err) {
                         if (err) { throw err; }
-                        return res.status(201).send({
-                            username: user.username,
-                            name: user.name
-                        }); //Check this
+                        return res.redirect('/account');
                     });
                 }
             );
@@ -58,10 +55,7 @@ exports.registerClient = [
             } else {
                 db.clients.save(name, clientId, clientSecret, domain, req.user.userId, 
                     function(err, client){
-                        res.status(201).send({
-                            clientId: client.clientId,
-                            clientSecret: client.clientSecret
-                        });
+                        return res.redirect('/account/apps');
                     }
                 );
             }
