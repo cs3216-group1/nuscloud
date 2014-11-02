@@ -11,7 +11,7 @@ exports.loginForm = function(req, res){
 }
 
 exports.login = passport.authenticate('local', {
-    successReturnToOrRedirect: '/',
+    successReturnToOrRedirect: '/account',
     failureRedirect: '/login'
 });
 
