@@ -1,2 +1,49 @@
-<p>Username: <%= user.username %></p>
-<p>Name: <%= user.name %></p>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Account Details</title>
+        <link rel="stylesheet" href="/styles/style.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Your NUSCloud Account</h1>
+                </div>
+                <div class="login-form details">
+                    <div><p>Username: <%= user.username %></p></div>
+                    <div><p>Name: <%= user.name %></p></div>
+                </div>
+            </div>
+            <div class="detail-screen-left">
+                <div class="login-form details">
+                    <p>Use your account to <b>log in</b> to NUSCloud applications</p>
+                    <p>Features coming soon:
+                        <ul>
+                            <li>Permission control</li>
+                            <li>Account management</li>
+                            <li>Adding friends on NUSCloud</li>
+                            <li>Privacy controls</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="detail-screen-right">
+                <div class="login-form details">
+                    <p>Use your account to <b>make</b> NUSCloud applications</p>
+                    <p>Build NUS web apps quickly and easily</p>
+                    <a class="btn btn-account" href="/client/registration">Create</a>
+                    <a class="btn btn-account" href="/account/apps">Manage</a>
+                    <a class="btn btn-account" href="/">Docs</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+            </div>
+        </div>
+    </body>
+</html>

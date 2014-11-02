@@ -18,7 +18,8 @@ var express = require('express'),
     register = require('./register'),
     api = require('./api'),
     cors = require('cors'),
-    friends = require('./friends');
+    friends = require('./friends'),
+    serveStatic = require('serve-static');
 // Express configuration
 
 var app = express();
@@ -28,18 +29,12 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
-/*
-app.use(function(req, res, next) {
-  console.log('-- session --');
-  console.dir(req.session);
-  //console.log(util.inspect(req.session, true, 3));
-  console.log('-------------');
-  next()
-});
-*/
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(errorHandler({ dumpExceptions: true, showStack: true }));
+
+app.use('/styles', serveStatic(__dirname + '/assets/styles'));
+app.use('/img', serveStatic(__dirname + '/assets/img'));
 
 // Passport configuration
 

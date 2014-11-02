@@ -3,7 +3,7 @@ var passport = require('passport'),
     db = require('./db');
 
 exports.index = function(req, res){
-    res.send('NUS Cloud Platform');
+    res.render('homepage');
 }
 
 exports.loginForm = function(req, res){
