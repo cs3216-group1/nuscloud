@@ -33,7 +33,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(errorHandler({ dumpExceptions: true, showStack: true }));
 
-app.use('/styles', serveStatic(__dirname + '/styles'));
+app.use('/styles', serveStatic(__dirname + '/assets/styles'));
+app.use('/img', serveStatic(__dirname + '/assets/img'));
 
 // Passport configuration
 
