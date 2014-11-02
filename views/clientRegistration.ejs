@@ -1,13 +1,38 @@
-<form action="/client/registration" method="post">
-	<div>
-	<label>App name:</label>
-	<input type="text" name="name"/><br/>
-	</div>
-    <div>
-    <label>App domain:</label>
-    <input type="text" name="domain"></br>
-    </div>
-	<div>
-	<input type="submit" value="Register"/>
-	</div>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Create an NUSCloud Application</title>
+        <link rel="stylesheet" href="/styles/style.css">
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2>Create an NUSCloud Application</h2>
+                </div>
+            
+                <form action="/client/registration" method="post" class="login-form">
+	                <div class="control-group">
+	                    <input type="text" class="login-field" value="" 
+                            name="name" id="name" 
+                            placeholder="app name"/>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="login-field" value=""
+                            name="namespace" id="namespace"
+                            placeholder="app namespace"/>
+                    </div>
+	                <div class="control-group">
+	                    <input type="text" class="login-field" value="" 
+                            name="domain" id="domain" 
+                            placeholder="app domain"/>
+                    </div>
+                    
+                    <input type="submit" value="register" class="btn" />
+                
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

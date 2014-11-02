@@ -1,19 +1,43 @@
-<p>Hi <%= user.name %>!</p>
-<p><b><%= client.name %></b> is requesting access to your account for the following permissions:</p>
-<% if (scope && scope.length) { %>
-<ul>    
-<% scope.forEach(function(scopeName){ %>
-    <li><%= scopeName %></li>
-<% }) %>
-</ul>
-<% } %>
-<p>Do you approve?</p>
-
-<form action="/dialog/authorize/decision" method="post">
-  <input name="transaction_id" type="hidden" value="<%= transactionID %>">
-  <input type="hidden" value='<%-JSON.stringify(scope)%>' name="scope" id="scope">
-  <div>
-  <input type="submit" value="Allow" name="allow" id="allow">
-  <input type="submit" value="Deny" name="cancel" id="deny">
-  </div>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login to <%= client.name %></title>
+        <link rel="stylesheet" href="/styles/style.css" type="text/css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="login-form dialog">
+                    <p>Hi <%= user.name %>!</p>
+                    <% if (scope && scope.length) { %>
+                        <p><b><%= client.name %></b>
+                            is requesting access to your account for the following permissions:
+                        </p>
+                        <ul>    
+                        <% scope.forEach(function(scopeName){ %>
+                            <li><%= scopeName %></li>
+                        <% }) %>
+                        </ul>
+                    <% } else {%>
+                        <p><b><%= client.name %></b>
+                            is requesting to log you in
+                        <p>
+                    <% } %>
+                    <p>Do you approve?</p>
+                    <form action="/dialog/authorize/decision" method="post">
+                        <input name="transaction_id" type="hidden" value="<%= transactionID %>">
+                        <input type="hidden" value='<%-JSON.stringify(scope)%>' name="scope" id="scope">
+                        <div>
+                            <input type="submit" value="Allow" name="allow" id="allow"
+                                class="btn btn-half-left" />
+                            <input type="submit" value="Deny" name="cancel" id="deny"
+                                class="btn btn-half-right" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

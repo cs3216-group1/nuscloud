@@ -1,15 +1,43 @@
-<% if (apps.length > 0) { %>
-    <ol>
-    <% for(var i=0; i<apps.length; i++) {%>
-        <li>Name: <%= apps[i].name %>
-            <ul>
-                <li>Id: <%= apps[i].clientId %></li>
-                <li>Secret: <%= apps[i].clientSecret %></li>
-            </ul>
-        </li>
-    <% } %>
-    </ol>
-<% } else { %>
-<p>You have no apps in this user account!</p>
-<% } %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Your NUSCloud Apps</title>
+        <link rel="stylesheet" href="/styles/style.css" type="text/css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Your NUSCloud Apps</h1>
+                    <a class="btn" href="/client/registration"><h2>
+                        Create a New App
+                    </h2></a>
+                </div>
+            </div>
+            <% if (apps.length > 0) { %>
+                <% for(var i=0; i<apps.length; i++) {%>
+                    <div class="login-screen">
+                        <div class="login-form details">
+                            <div class="app-title">
+                                <h2><%= apps[i].name %></h2>
+                            </div>
+                            <ul>
+                                <li><b>App Id:</b> <%= apps[i].clientId %></li>
+                                <li><b>App Secret:</b> <%= apps[i].clientSecret %></li>
+                            </ul>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div class="login-screen">
+                    <div class="login-form details">
+                        <p>You have not created any apps yet!</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </body>
+</html>
 
