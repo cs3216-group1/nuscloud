@@ -1,16 +1,43 @@
-<form action="/loginImplicit" method="post">
-	<div>
-	<label>Username:</label>
-	<input type="text" name="username"/><br/>
-	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="hidden" id="client_id" name="client_id" value="<%= clientId %>">
-    <input type="hidden" id="redirect_uri" name="redirect_uri" value="<%= redirectUri %>">
-    <input type="hidden" id="scope" name="scope" value="<%= scope %>">
-    <input type="submit" value="Submit"/>
-	</div>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login with NUSCloud</title>
+        <link rel="stylesheet" href="/styles/style.css">
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2>Login with NUSCloud</h2>
+                </div>
+                
+                <form action="/loginImplicit" method="post" class="login-form">
+	                <div class="control-group">
+	                    <input type="text" class="login-field" value="" 
+                            name="username" id="username"
+                            placeholder="username"/>
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="login-field" value="" 
+                            name="password" id="password"
+                            placeholder="password"/>
+                    </div>
+                 
+	                <input type="hidden" id="client_id" name="client_id"
+                        value="<%= clientId %>">
+                    <input type="hidden" id="redirect_uri" name="redirect_uri"
+                        value="<%= redirectUri %>">
+                    <input type="hidden" id="scope" name="scope"
+                        value="<%= scope %>">
+                
+                    <input type="submit" value="login" class="btn" />
+                
+                    <a class="login-link" target="_blank" href="/registration">
+                        Not on NUSCloud yet? Register here
+                    </a>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,17 +1,42 @@
-<form action="/registration" method="post">
-	<div>
-	<label>Name:</label>
-	<input type="text" name="name"/><br/>
-	</div>
-	<div>
-	<label>Username:</label>
-	<input type="text" name="username"/><br/>
-	</div>
-	<div>
-	<label>Password:</label>
-	<input type="password" name="password"/>
-	</div>
-	<div>
-	<input type="submit" value="Register"/>
-	</div>
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Register with NUSCloud</title>
+        <link rel="stylesheet" href="/styles/style.css">
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2>Register with NUSCloud</h2>
+                </div>
+            
+                <form action="/registration" method="post" class="login-form">
+	                <div class="control-group">
+	                    <input type="text" class="login-field" value="" 
+                            name="name" id="name" 
+                            placeholder="name"/>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="login-field" value=""
+                            name="username" id="username"
+                            placeholder="username"/>
+	                <div class="control-group">
+	                    <input type="email" class="login-field" value="" 
+                            name=email" id="email" 
+                            placeholder="nus email"/>
+                    </div>
+	                <div class="control-group">
+	                    <input type="password" class="login-field" value="" 
+                            name="password" id="password" 
+                            placeholder="password"/>
+                    </div>
+                    
+                    <input type="submit" value="register" class="btn" />
+                
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
