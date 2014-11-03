@@ -3,7 +3,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     var existing_cookie = get_cookie("SDK_" + app_id);
     if(existing_cookie && existing_cookie != " "){ 
         token = JSON.parse(existing_cookie).token;
-        console.log(token);
+        //console.log(token);
     }
 
     this.login = function(callback){
@@ -26,7 +26,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                     var token_start = hash_args.indexOf('=') + 1;
                     var token_end = hash_args.indexOf('&');
                     var new_token = hash_args.slice(token_start, token_end);
-                    console.log(url);
+                    //console.log(url);
                     set_cookie("SDK_" + app_id, JSON.stringify({token: new_token}),
                          7, window.location.origin); 
                     token = new_token;
@@ -49,14 +49,14 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
 
     this.get = function(api_path, callback){
         return ajax.get(host + "/api/" + api_path, {}, function(res){
-            console.log(res);
+            //console.log(res);
             if(callback) {return callback(res);}
         });
     }
 
     this.post = function(api_path, data, callback){
         return ajax.post(host + "/api/" + api_path, data, function(res){
-            console.log(res);
+            //console.log(res);
             if(callback) {return callback(res);}
         });
     }
@@ -65,10 +65,10 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     function set_cookie(cookie_name, cookie_value, lifespan, domain){
         var toAdd = cookie_name + "=" + 
             encodeURIComponent(cookie_value);
-        console.log(toAdd);
+        //console.log(toAdd);
         document.cookie = toAdd;
-        console.log('cookie');
-        console.log(document.cookie);
+        //console.log('cookie');
+        //console.log(document.cookie);
     }
 
     function get_cookie(cookie_name){
@@ -137,7 +137,8 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     ajax.post = function(url, data, callback, sync) {
         var query = [];
         for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + JSON.stringify(data[key]));
+            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(JSON.stringify(data[key])));
+            //console.log(JSON.stringify(data[key]));
         }
         ajax.send(url, callback, 'POST', query.join('&'), sync)
     };
