@@ -2,8 +2,10 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     
     var existing_cookie = get_cookie("SDK_" + app_id);
     if(existing_cookie && existing_cookie != " "){ 
-        this.token = JSON.parse(existing_cookie).token;
+        token = JSON.parse(existing_cookie).token;
+        console.log(token);
     }
+
     this.login = function(callback){
         var url = host + "/authImplicit?client_id=" + app_id + 
                     "&redirect_uri=" + redirect_url + "&scope=" +
@@ -61,9 +63,12 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
 
 
     function set_cookie(cookie_name, cookie_value, lifespan, domain){
-        document.cookie = cookie_name + "=" + 
-            encodeURIComponent(cookie_value) + "; max_age" + 
-            (60*60*24*lifespan) + "; path=/" + domain;
+        var toAdd = cookie_name + "=" + 
+            encodeURIComponent(cookie_value);
+        console.log(toAdd);
+        document.cookie = toAdd;
+        console.log('cookie');
+        console.log(document.cookie);
     }
 
     function get_cookie(cookie_name){
@@ -75,7 +80,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                 cookie = cookie.substring(1);
             }
             if (cookie.indexOf(name) != -1){
-                return cookie.substring(name.length, cookie.length);
+                return decodeURIComponent(cookie.substring(name.length, cookie.length));
             }
         }
         return "";
