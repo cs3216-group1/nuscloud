@@ -56,7 +56,8 @@ app.get('/login', site.loginForm);
 app.post('/login', site.login);
 app.get('/logout', cors(corsOptions), site.logout);
 app.get('/account', site.account);
-app.get('/account/apps', site.appdetails);
+app.get('/account/dev', site.appdetails);
+app.get('/account/apps', site.userappdetails);
 
 app.get('/registration', register.registerFormUser);
 app.post('/registration', register.registerUser);

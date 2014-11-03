@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Dev - Your NUSCloud Apps</title>
+        <title>Your NUSCloud Apps</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" /> 
         <link rel="stylesheet" href="/styles/style.css" type="text/css" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
@@ -26,22 +26,18 @@
         <div class="login">
             <div class="login-screen">
                 <div class="app-title">
-                    <h2>Dev - Your NUSCloud Apps</h2>
-                    <a class="btn" href="/client/registration"><h2>
-                        Create a New App
-                    </h2></a>
+                    <h1>Your NUSCloud Apps</h1>
                 </div>
             </div>
-            <% if (apps.length > 0) { %>
-                <% for(var i=0; i<apps.length; i++) {%>
+            <% if (perms.length > 0) { %>
+                <% for(var i=0; i<perms.length; i++) {%>
                     <div class="login-screen">
                         <div class="login-form details">
                             <div class="app-title">
-                                <h2><%= apps[i].name %></h2>
+                                <h2><%= perms[i].clientname %></h2>
                             </div>
                             <ul>
-                                <li><b>App Id:</b> <%= apps[i].clientId %></li>
-                                <li><b>App Secret:</b> <%= apps[i].clientSecret %></li>
+                                <li><b>Permissions:</b> <%= perms[i].permissions %></li>
                             </ul>
                         </div>
                     </div>
@@ -49,7 +45,7 @@
             <% } else { %>
                 <div class="login-screen">
                     <div class="login-form details">
-                        <p>You have not created any apps yet!</p>
+                        <p>You have not signed in to any apps yet!</p>
                     </div>
                 </div>
             <% } %>

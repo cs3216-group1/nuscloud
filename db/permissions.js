@@ -12,6 +12,10 @@ exports.find = function(userId, clientId, done){
     Permission.findOne({userId: userId, clientId: clientId}).lean().exec(done);
 }
 
+exports.findByUserId = function(userId, done){
+    Permission.find({userId: userId}).lean().exec(done);
+}
+
 exports.save = function(userId, clientId, done){
     var permission = new Permission({
         userId: userId,
