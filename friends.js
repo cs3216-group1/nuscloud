@@ -1,9 +1,9 @@
 var passport = require('passport');
 
 exports.dummyData = function(req, res, next){
-    passport.authenticate('bearer', {session: false}, function(err, user, scope){
+    passport.authenticate('bearer', {session: false}, function(err, user, info){
         if(err || !user){ return res.status(404).json({status: 'error'}); }
-        else if (scope.indexOf('friends-read') === -1){
+        else if (info.scope.indexOf('friends-read') === -1){
             return res.status(401).json({status: 'unauthorized'});
         } else {
             return res.json({

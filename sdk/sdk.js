@@ -1,18 +1,10 @@
-
-var server_host = "nuscloud.jishnumohan.com"
-var redirect_url = window.location.origin + "/blank.html"; //The popup window will redirect here on login
-//This can be a blank page on your app as the implementation in the SDK
-//will save the token and close the popup on successful auth
-var permissions = "friends-read";
-var app_id = "VucFTLGq7wM3"; //As per registration
-
-var Sdk = function(host, redirect_url, app_id, permissions){
+var NUSCloud = function(host, redirect_url, app_id, permissions){
     
     var existing_cookie = get_cookie("SDK_" + app_id);
     if(existing_cookie && existing_cookie != " "){ 
         this.token = JSON.parse(existing_cookie).token;
     }
-    this.login = function(){
+    this.login = function(callback){
         var url = host + "/authImplicit?client_id=" + app_id + 
                     "&redirect_uri=" + redirect_url + "&scope=" +
                     encodeURIComponent(permissions);
@@ -37,6 +29,7 @@ var Sdk = function(host, redirect_url, app_id, permissions){
                          7, window.location.origin); 
                     token = new_token;
                     login_window.close();
+                    if(callback) {callback();}
                 }
             } catch(e) {
                 //Cross Origin Errors will be thrown
@@ -46,23 +39,23 @@ var Sdk = function(host, redirect_url, app_id, permissions){
         }, 500);
     }
 
-    this.logout = function(){
-        return ajax.get(host + "/logout", {}, function(res){
-            return res;
+    this.logout = function(callback){
+        return ajax.get(host + "/logoutImplicit", {}, function(res){
+            if(callback) {return callback(res);}
         });
     }
 
-    this.get = function(api_path){
+    this.get = function(api_path, callback){
         return ajax.get(host + "/api/" + api_path, {}, function(res){
             console.log(res);
-            return res;
+            if(callback) {return callback(res);}
         });
     }
 
-    this.post = function(api_path, data){
+    this.post = function(api_path, data, callback){
         return ajax.post(host + "/api/" + api_path, data, function(res){
             console.log(res);
-            return res;
+            if(callback) {return callback(res);}
         });
     }
 
@@ -146,4 +139,3 @@ var Sdk = function(host, redirect_url, app_id, permissions){
 
 }
 
-var sdk = new Sdk(server_host, redirect_url, app_id, permissions);
