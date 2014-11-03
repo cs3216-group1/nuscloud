@@ -1,12 +1,4 @@
-
-var server_host = "http://localhost:3000"
-var redirect_url = window.location.origin + "/blank.html"; //The popup window will redirect here on login
-//This can be a blank page on your app as the implementation in the SDK
-//will save the token and close the popup on successful auth
-var app_id = "ej4Nf2ID8IH1"; //As per registration
-var permissions = "friends-read";
-
-var Sdk = function(host, redirect_url, app_id, permissions){
+var NUSCloud = function(host, redirect_url, app_id, permissions){
     
     var existing_cookie = get_cookie("SDK_" + app_id);
     if(existing_cookie && existing_cookie != " "){ 
@@ -147,4 +139,3 @@ var Sdk = function(host, redirect_url, app_id, permissions){
 
 }
 
-var sdk = new Sdk(server_host, redirect_url, app_id, permissions);
