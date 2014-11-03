@@ -37,8 +37,9 @@
                                 <h2><%= perms[i].clientname %></h2>
                             </div>
                             <ul>
-                                <li><b>Permissions:</b> <%= perms[i].permissions %></li>
+                                <li><h4><b>Permissions:</b> <%= perms[i].permissions %></h4></li>
                             </ul>
+                            <a class="btn" href="/account/apps/<%= perms[i].clientId %>">View Data</a>
                         </div>
                     </div>
                 <% } %>

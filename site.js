@@ -57,3 +57,15 @@ exports.userappdetails = [
         });
     }
 ]
+
+exports.userappdata = [
+    login.ensureLoggedIn(),
+    function(req, res){
+        var userId = req.user.userId;
+        var clientId = req.params.clientId;
+        db.appUserData.getData(clientId, userId, '/', function(err, bool, obj){
+            console.log(obj);
+            res.json(obj);
+        });
+    }
+]
