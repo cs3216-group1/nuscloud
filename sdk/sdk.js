@@ -132,7 +132,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     ajax.post = function(url, data, callback, sync) {
         var query = [];
         for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+            query.push(encodeURIComponent(key) + '=' + JSON.stringify(data[key]));
         }
         ajax.send(url, callback, 'POST', query.join('&'), sync)
     };

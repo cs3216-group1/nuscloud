@@ -24,7 +24,8 @@ exports.editUserInfo = function(req, res, next){
             else if (info.scope.indexOf('info-write') === -1){
                 return res.status(401).json({status: 'unauthorized'});
             } else {
-                db.users.updateInfoById(user.userId, req.body, function(err, user){
+                var data = JSON.parse(req.body);
+                db.users.updateInfoById(user.userId, data, function(err, user){
                     if(!user) {
                         res.status(400).json({status: 'error'});
                     } else {
@@ -90,7 +91,7 @@ exports.editUserAppInfo = function(req, res, next){
                 var path = req.params[0];
                 var userId = user.userId;
                 var clientId = client.clientId;
-                var data = req.body.data;
+                var data = JSON.parse(req.body.data);
                 db.appUserData.putData(clientId, userId, path, data, 
                     function(err){
                         if (err) { 

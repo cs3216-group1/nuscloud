@@ -65,7 +65,7 @@ exports.userappdata = [
         var clientId = req.params.clientId;
         db.appUserData.getData(clientId, userId, '/', function(err, bool, obj){
             console.log(obj);
-            res.send(JSON.stringify(obj));
+            res.json(obj);
         });
     }
 ]
