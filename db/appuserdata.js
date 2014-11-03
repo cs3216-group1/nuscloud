@@ -26,7 +26,7 @@ exports.getData = function(clientId, userId, path, done){
             if(currObj.hasOwnProperty(pathArray[key])){
                 currObj = currObj[pathArray[key]];
             } else {
-                console.log(pathArray[key] + ' is not present');
+                //console.log(pathArray[key] + ' is not present');
                 return done(false, true);
             }
         }
@@ -43,18 +43,34 @@ exports.putData = function(clientId, userId, path, data, done){
         if(pathArray[pathArray.length - 1] == ""){
             pathArray = pathArray.slice(0,-1);
         }
-
+        if(pathArray[0] == ""){
+            pathArray = pathArray.slice(1);
+        }
+        //console.log(pathArray);
         for(var key = 0; key < pathArray.length - 1; key++){
+            //console.log('Start of Loop');
+            //console.log(currData);
+    
             if(!currData.hasOwnProperty(pathArray[key])){
                 currData[pathArray[key]] = {};
-                currData = data[pathArray[key]];
             }
+            if (typeof currData[pathArray[key]] != 'object'){
+                currData[pathArray[key]] = {};
+            }
+            currData = currData[pathArray[key]];
+            //console.log('End of loop');
+            //console.log(currData);
         }
+        //console.log('Before Set');
+        //console.log(currData);
         currData[pathArray[key]] = data;
-        console.log(currData);
-        console.log(doc.data);
+        //console.log('After Set');
+        //console.log(currData);
+        //console.log('Original Object');
+        //console.log(doc.data);
         doc.markModified('data');
         doc.save(done);
+        
     });
 }
 
