@@ -19,7 +19,9 @@ var express = require('express'),
     api = require('./api'),
     cors = require('cors'),
     friends = require('./friends'),
-    serveStatic = require('serve-static');
+    serveStatic = require('serve-static'),
+    favicon = require('serve-favicon');
+
 // Express configuration
 
 var app = express();
@@ -37,6 +39,8 @@ app.use('/styles', serveStatic(__dirname + '/assets/styles'));
 app.use('/img', serveStatic(__dirname + '/assets/img'));
 app.use('/js', serveStatic(__dirname + '/assets/js'));
 app.use('/sdk', serveStatic(__dirname + '/sdk'));
+
+app.use(favicon(__dirname + '/assets/img/blueC.ico'));
 
 // Passport configuration
 
