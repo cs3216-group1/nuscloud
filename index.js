@@ -35,6 +35,7 @@ app.use(errorHandler({ dumpExceptions: true, showStack: true }));
 
 app.use('/styles', serveStatic(__dirname + '/assets/styles'));
 app.use('/img', serveStatic(__dirname + '/assets/img'));
+app.use('/js', serveStatic(__dirname + '/assets/js'));
 app.use('/sdk', serveStatic(__dirname + '/sdk'));
 
 // Passport configuration

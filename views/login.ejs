@@ -3,25 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Login with NUSCloud</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/styles/style.css">
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">
+        <% include common-links.ejs %>    
     </head>
     <body>
-    
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/"><b>NUSCloud</b></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/registration">Register</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        <% include public-navbar.ejs %> 
         <div class="login">
             <div class="login-screen">
                 <div class="app-title">
@@ -39,7 +24,7 @@
                             name="password" id="password" placeholder="password"/>
                     </div>
                  
-                    <input type="submit" value="login" class="btn" />
+                    <input type="submit" value="login" class="nuscloud-btn" />
                 
                 </form>
             </div>

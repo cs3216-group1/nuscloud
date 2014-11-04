@@ -3,8 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Login to <%= client.name %></title>
-        <link rel="stylesheet" href="/styles/style.css" type="text/css" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
+        <% include common-links.ejs %>
     </head>
     <body>
         <div class="login">
@@ -31,9 +30,9 @@
                         <input type="hidden" value='<%-JSON.stringify(scope)%>' name="scope" id="scope">
                         <div>
                             <input type="submit" value="Allow" name="allow" id="allow"
-                                class="btn btn-half-left" />
+                                class="nuscloud-btn btn-half-left" />
                             <input type="submit" value="Deny" name="cancel" id="deny"
-                                class="btn btn-half-right" />
+                                class="nuscloud-btn btn-half-right" />
                         </div>
                     </form>
                 </div>

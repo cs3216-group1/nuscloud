@@ -3,26 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Account Details</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" /> 
-        <link rel="stylesheet" href="/styles/style.css" media="screen" type="text/css" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans" type="text/css" />
+        <% include common-links.ejs %>
     </head>
     <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/"><b>NUSCloud</b></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/account">Account</a></li>
-            <li><a href="/account/apps">My Apps</a></li>
-            <li><a href="/account/dev">Dev</a></li>
-            <li><a href="/logout">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        <% include user-navbar.ejs %>
         <div class="login">
             <div class="login-screen">
                 <div class="app-title">
@@ -36,7 +20,7 @@
             <div class="detail-screen-left">
                 <div class="login-form details">
                     <p>Use your account to <b>log in</b> to NUSCloud applications</p>
-                    <a class="btn btn-account" href="/account/apps">Your Apps</a>
+                    <a class="nuscloud-btn btn-account" href="/account/apps">Your Apps</a>
                    <p></p> <p>Features coming soon:
                         <ul>
                             <li>Permission controls</li>
@@ -51,9 +35,9 @@
                 <div class="login-form details">
                     <p>Use your account to <b>make</b> NUSCloud applications</p>
                     <p>Build NUS web apps quickly and easily</p>
-                    <a class="btn btn-account" href="/client/registration">Create</a>
-                    <a class="btn btn-account" href="/account/dev">Manage</a>
-                    <a class="btn btn-account" href="/">Docs</a>
+                    <a class="nuscloud-btn btn-account" href="/client/registration">Create</a>
+                    <a class="nuscloud-btn btn-account" href="/account/dev">Manage</a>
+                    <a class="nuscloud-btn btn-account" href="/">Docs</a>
                 </div>
             </div>
         </div>
