@@ -16,8 +16,14 @@ exports.login = passport.authenticate('local', {
 });
 
 exports.logout = function(req, res){
-    req.logout();
-    res.redirect('/');
+    if(!req.user){
+        return;
+    }
+    db.accessTokens.removeByUserId(req.user.userId, function(err, num){
+        if(err) { console.log(err); }
+        req.logout();
+        res.redirect('/');
+    });
 }
 
 exports.account = [

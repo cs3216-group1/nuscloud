@@ -23,3 +23,11 @@ exports.save = function(key, userId, clientId, scope, done){
     });
     token.save(done);
 }
+
+exports.removeByUserId = function(userId, done){
+    Token.remove({userId: userId}).exec(done);
+}
+
+exports.remove = function(userId, clientId, done){
+    Token.remove({userId: userId, clientId: clientId}).exec(done);
+}

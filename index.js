@@ -59,7 +59,7 @@ app.options("*", cors());
 app.get('/', site.index);
 app.get('/login', site.loginForm);
 app.post('/login', site.login);
-app.get('/logout', cors(corsOptions), site.logout);
+app.get('/logout', site.logout);
 app.get('/account', site.account);
 app.get('/account/dev', site.appdetails);
 app.get('/account/apps', site.userappdetails);
@@ -73,6 +73,7 @@ app.post('/client/registration', register.registerClient);
 app.get('/authImplicit', implicit.autologin);
 app.get('/loginImplicit', implicit.loginForm);
 app.post('/loginImplicit', implicit.login);
+app.get('/logoutImplicit', cors(corsOptions), implicit.logout);
 
 app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);

@@ -1,6 +1,7 @@
 var passport = require('passport'),
     login = require('connect-ensure-login'),
-    querystring = require('querystring');
+    querystring = require('querystring'),
+    db = require('./db');
 
 exports.loginForm = function(req, res){
     if(req.isAuthenticated()){
@@ -49,8 +50,27 @@ exports.autologin = function(req, res, next){
             }
             req.logIn(user, function(err) {
                 if (err) { throw err;}
-                return res.redirect('/dialog/authorize?response_type=token&' + urlParams);
+                return res.redirect('/dialog/authorize?response_type=token&'
+                     + urlParams);
             });
         })(req, res, next);
     }
+}
+
+exports.logout = function(req, res, next){
+    passport.authenticate('bearer', {session: false},
+        function(err, user, info){
+            if (err) { return res.status(404).json({status: 'error'}); }
+            if (!user) { return res.status(400).json({status: 'error'}); }
+            else {
+                db.accessTokens.remove(user.userId, info.clientId,
+                    function(err, num){
+                        if(err) { console.log(err); }
+                        req.logout();
+                        res.status(204).send();
+                    }
+                );
+            }
+        }
+    )(req, res, next);
 }
