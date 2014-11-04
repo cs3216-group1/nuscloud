@@ -1,19 +1,36 @@
 <html>
     <head>
         <title>Test for Oauth JS-SDK</title>
-        <script src="http://nuscloud.jishnumohan.com/sdk/sdk.js"></script>
+        <script src="http://localhost:3000/sdk/sdk.js"></script>
         <script src="./example.js"></script>
         <script>
         function example_post(){
-            return sdk.post('me/app/info', {'data': 'payload'});
+            return sdk.post('me/app/nested', {'data':{'def': 'xyz'}}, function(res){
+                console.log(res);
+            });
+        }
+        function example_info(){
+            return sdk.get('me/app/nested', function(res){
+                console.log(res);
+            });
+        }
+        function example_get_all(){
+            return sdk.get('me/app/', function(res){
+                console.log(res);
+            });
+        }
+        function example_friends(){
+            return sdk.get('me/friends', function(res){
+                console.log(res);
+            });
         }
         </script>
     </head>
     <body>
         <button onclick="sdk.login()">Login</button>
-        <button onclick="sdk.get('me/app/info')">Info</button>
-        <button onclick="sdk.get('me/app/')">All</button>
-        <button onclick="sdk.get('me/friends')">Friends</button>
+        <button onclick="example_info()">Info</button>
+        <button onclick="example_get_all()">All</button>
+        <button onclick="example_friends()">Friends</button>
         <button onclick="example_post()">Update</button>
     </body>
 </html>
