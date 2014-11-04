@@ -1,6 +1,8 @@
 var NUSCloud = function(host, redirect_url, app_id, permissions){
     
+    var token;
     var existing_cookie = get_cookie("SDK_" + app_id);
+    
     if(existing_cookie && existing_cookie != " "){ 
         token = JSON.parse(existing_cookie).token;
         //console.log(token);
@@ -42,23 +44,39 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     }
 
     this.logout = function(callback){
-        return ajax.get(host + "/logoutImplicit", {}, function(res){
-            if(callback) {return callback(res);}
-        });
+        if(token){
+            return ajax.get(host + "/logoutImplicit", {}, function(res){
+                if(callback) {return callback(res);}
+            });
+        } else {
+            return callback({status: "no token"});
+        }
     }
 
     this.get = function(api_path, callback){
-        return ajax.get(host + "/api/" + api_path, {}, function(res){
-            //console.log(res);
-            if(callback) {return callback(res);}
-        });
+        if(token){
+            return ajax.get(host + "/api/" + api_path, {}, function(res){
+                //console.log(res);
+                if(callback) {return callback(res);}
+            });
+        } else {
+            return callback({status: "no token"});
+        }
     }
 
     this.post = function(api_path, data, callback){
-        return ajax.post(host + "/api/" + api_path, data, function(res){
-            //console.log(res);
-            if(callback) {return callback(res);}
-        });
+        if(token){
+            return ajax.post(host + "/api/" + api_path, data, function(res){
+                //console.log(res);
+                if(callback) {return callback(res);}
+            });
+        } else {
+            return callback({status: "no token"});
+        }
+    }
+
+    this.has_token = function(callback){
+        return callback((token != null));
     }
 
 
