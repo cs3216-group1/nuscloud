@@ -40,20 +40,22 @@ exports.userappdetails = [
     login.ensureLoggedIn(),
     function(req, res){
         db.permissions.findByUserId(req.user.userId, function(err, perms){
-            var done = 0;
-            perms.map(function(perm, index, array){
-                db.clients.findByClientId(perm.clientId, function(err, client){
-                    array[index].clientname = client.name;
-                    done++;
-                    render();
-                })
-            });
-            //TODO Clean up with Promises
             var render = function(){
                 if (done === perms.length){
                     res.render('userappdetails', { perms: perms });
                 }
             }
+            var done = 0;
+            perms.map(function(perm, index, array){
+                db.clients.findByClientId(perm.clientId, function(err, client){
+                    if(err){console.log(err);}
+                    array[index].clientname = client.name;
+                    done++;
+                    render();
+                })
+            });
+            render(); //For the zero case
+            //TODO Clean up with Promises
         });
     }
 ]
