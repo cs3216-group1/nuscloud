@@ -54,8 +54,14 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     }
 
     this.get = function(api_path, callback){
+        if(api_path.charAt(0) != "/"){
+            api_path = "/" + api_path;
+        }
+        if(api_path.charAt(api_path.length - 1) != "/"){
+            api_path = api_path + "/";
+        }
         if(token){
-            return ajax.get(host + "/api/" + api_path, {}, function(res){
+            return ajax.get(host + "/api" + api_path, {}, function(res){
                 //console.log(res);
                 if(callback) {return callback(res);}
             });
@@ -64,9 +70,21 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
         }
     }
 
-    this.post = function(api_path, data, callback){
+    this.post = function(api_path, inputData, callback){
+        if(api_path.charAt(0) != "/"){
+            api_path = "/" + api_path;
+        }
+        if(api_path.charAt(api_path.length - 1) != "/"){
+            api_path = api_path + "/";
+        }
+        var data;
+        if (!inputData.hasOwnProperty("data")){
+            data = {data: inputData};
+        } else {
+            data = inputData;
+        }
         if(token){
-            return ajax.post(host + "/api/" + api_path, data, function(res){
+            return ajax.post(host + "/api" + api_path, data, function(res){
                 //console.log(res);
                 if(callback) {return callback(res);}
             });
