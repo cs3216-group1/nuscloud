@@ -58,10 +58,7 @@ exports.getUserAppInfo = function(req, res, next){
                         }
                         if (absent) {
                             console.log('Absent');
-                            return res.status(204).json({
-                                status: 'ok', 
-                                data: {} 
-                            });
+                            return res.status(200).json({status: 'absent'});
                         } else {
                             console.log('Found');
                             return res.status(200).json({
@@ -95,11 +92,11 @@ exports.editUserAppInfo = function(req, res, next){
                         if (err) { 
                             return res.status(404).json({status: 'error'}); 
                         } else if (absent) { 
-                            return res.status(204).json({status: 'absent'}); 
+                            return res.status(200).json({status: 'absent'}); 
                         } else if (success) {
                             return res.status(200).json({status: 'ok'});
                         } else {
-                            return res.status(204).json({status: 'huh'});
+                            return res.status(404).json({status: 'huh'});
                         }
                     }
                 );
