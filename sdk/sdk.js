@@ -69,6 +69,23 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
             return callback({status: "no token"});
         }
     }
+    
+    this.delete = function(api_path, callback){
+        if(api_path.charAt(0) != "/"){
+            api_path = "/" + api_path;
+        }
+        if(api_path.charAt(api_path.length - 1) != "/"){
+            api_path = api_path + "/";
+        }
+        if(token){
+            return ajax.delete(host + "/api" + api_path, {}, function(res){
+                //console.log(res);
+                if(callback) {return callback(res);}
+            });
+        } else {
+            return callback({status: "no token"});
+        }
+    }
 
     this.post = function(api_path, inputData, callback){
         if(api_path.charAt(0) != "/"){
@@ -169,6 +186,11 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
         }
         ajax.send(url + '?' + query.join('&'), callback, 'GET', null, sync)
     };
+
+    ajax.delete = function(url, data, callback, sync) {
+        //Assume no data
+        ajax.send(url, callback, 'DELETE', null, sync);
+    }
 
     ajax.post = function(url, data, callback, sync) {
         var query = [];

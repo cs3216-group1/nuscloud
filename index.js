@@ -84,6 +84,7 @@ app.post('/api/me/info', cors(corsOptions), api.editUserInfo);
 
 app.get('/api/me/app/*', cors(corsOptions), api.getUserAppInfo);
 app.post('/api/me/app/*', cors(corsOptions), api.editUserAppInfo);
+app.delete('/api/me/app/*', cors(corsOptions), api.deleteUserAppInfo);
 
 app.get('/api/me/appinfo', cors(corsOptions), client.info);
 

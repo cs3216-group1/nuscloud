@@ -34,6 +34,40 @@ exports.getData = function(clientId, userId, path, done){
     });
 }
 
+exports.deleteData = function(clientId, userId, path, done){ 
+   AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
+        if (err) { return done(err);}
+        var pathArray = path.split('/');
+        if(pathArray[pathArray.length - 1] == ""){
+            pathArray = pathArray.slice(0,-1);
+        }
+        if(pathArray[0] == ""){
+            pathArray = pathArray.slice(1);
+        }
+        var currObj = doc.data;
+        for(var key = 0; key < pathArray.length - 1; key++){
+            if(!currObj){
+                return done(false, true);
+            }
+            if(currObj.hasOwnProperty(pathArray[key])){
+                currObj = currObj[pathArray[key]];
+            } else {
+                return done(false, true);
+            }
+        }
+        if(currObj.hasOwnProperty(pathArray[key])){
+            delete currObj[pathArray[key]];
+            doc.markModified('data');
+            doc.save(function(err){
+                if(err){return done(err);}
+                return done(false, false, true);
+            });
+        } else {
+            return done(false, true);
+        }
+    });
+}
+
 exports.putData = function(clientId, userId, path, data, done){
     AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
         if (err) { return done(err);}
