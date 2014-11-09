@@ -20,7 +20,8 @@ var express = require('express'),
     cors = require('cors'),
     friends = require('./friends'),
     serveStatic = require('serve-static'),
-    favicon = require('serve-favicon');
+    favicon = require('serve-favicon'),
+    config = require('./config');
 
 // Express configuration
 
@@ -30,7 +31,11 @@ app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(session({ 
+    secret: config.session.secret, 
+    resave: true,
+    saveUninitialized: true 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(errorHandler({ dumpExceptions: true, showStack: true }));
