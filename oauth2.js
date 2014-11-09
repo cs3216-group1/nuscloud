@@ -68,11 +68,11 @@ server.grant(oauth2orize.grant.token(function(client, user, ares, done) {
     if(!(scopeArray instanceof Array)){
         scopeArray = [];
     }
-    if(scopeArray.indexOf(client.name + "-read")===-1){
-        scopeArray.push(client.name + "-read");
+    if(scopeArray.indexOf(client.namespace + "-read")===-1){
+        scopeArray.push(client.namespace + "-read");
     }
-    if(scopeArray.indexOf(client.name + "-write")===-1){
-        scopeArray.push(client.name + "-write");
+    if(scopeArray.indexOf(client.namespace + "-write")===-1){
+        scopeArray.push(client.namespace + "-write");
     }
     db.accessTokens.save(token, user.userId, client.clientId, scopeArray, function(err) {
         if (err) { return done(err); }

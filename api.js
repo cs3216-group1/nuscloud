@@ -44,7 +44,7 @@ exports.getUserAppInfo = function(req, res, next){
         db.clients.findByClientId(info.clientId, function(err, client){
             if (err) { return res.status(404).json({status: 'error'}); }
             if (!client) { return res.status(401).json({status: 'bad token'}); }
-            if (info.scope.indexOf(client.name + '-read') === -1){
+            if (info.scope.indexOf(client.namespace + '-read') === -1){
                 return res.status(401).json({status: 'unauthorized'});
             } else {
                 var path = req.params[0];
@@ -80,7 +80,7 @@ exports.editUserAppInfo = function(req, res, next){
         db.clients.findByClientId(info.clientId, function(err, client){
             if (err) { return res.status(404).json({status: 'error'}); }
             if (!client) { return res.status(401).json({status: 'bad token'}); }
-            if (info.scope.indexOf(client.name + '-write') === -1){
+            if (info.scope.indexOf(client.namespace + '-write') === -1){
                 return res.status(401).json({status: 'unauthorized'});
             } else {
                 var path = req.params[0];
@@ -112,7 +112,7 @@ exports.deleteUserAppInfo = function(req, res, next){
         db.clients.findByClientId(info.clientId, function(err, client){
             if (err) { return res.status(404).json({status: 'error'}); }
             if (!client) { return res.status(401).json({status: 'bad token'}); }
-            if (info.scope.indexOf(client.name + '-write') === -1){
+            if (info.scope.indexOf(client.namespace + '-write') === -1){
                 return res.status(401).json({status: 'unauthorized'});
             } else {
                 var path = req.params[0];

@@ -45,14 +45,15 @@ exports.registerClient = [
     function(req, res) {
         //TODO Validate name
         var name = req.body.name;
+        var namespace = req.body.namespace;
         var domain = req.body.domain;
         var clientId = utils.uid(12);
         var clientSecret = utils.uid(20);
-        db.clients.findByClientName(name, function(err, client){
+        db.clients.findByClientNamespace(namespace, function(err, client){
             if(client){
-                res.send("Username is already taken", 422);
+                res.send("App namespace is already taken", 422);
             } else {
-                db.clients.save(name, clientId, clientSecret, domain, req.user.userId, 
+                db.clients.save(name, clientId, clientSecret, domain, namespace, req.user.userId, 
                     function(err, client){
                         return res.redirect('/account/dev');
                     }
