@@ -74,6 +74,7 @@ app.get('/authImplicit', implicit.autologin);
 app.get('/loginImplicit', implicit.loginForm);
 app.post('/loginImplicit', implicit.login);
 app.get('/logoutImplicit', cors(corsOptions), implicit.logout);
+app.get('/api/getloginstatus', cors(corsOptions), api.getLoginStatus);
 
 app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);

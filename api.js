@@ -131,3 +131,19 @@ exports.deleteUserAppInfo = function(req, res, next){
         });
     })(req, res, next);
 }
+
+exports.getLoginStatus = function(req, res, next){
+    passport.authenticate('bearer', {session: false}, function(err, user, scope){
+        if (err) { return res.status(404).json({status: 'error'}); }
+        if (!user) { return res.status(200).json({status: 'unknown'}); }
+        db.clients.findByClientId(info.clientId, function(err, client){
+            if (err) { return res.status(404).json({status: 'error'}); }
+            if (!client) { return res.status(200).json({status:'unauthorized'}); }
+            if (info.scope.indexOf(client.namespace + '-write') === -1){
+                return res.status(200).json({status: 'unauthorized'});
+            } else {
+                return res.status(200).json({status: 'connected'});
+            }
+        });
+    })(req, res, next);
+}

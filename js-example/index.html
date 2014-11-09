@@ -24,6 +24,11 @@
                 console.log(res);
             });
         }
+        function example_status(){
+            return sdk.getLoginStatus(function(res){
+                console.log(res);
+            });
+        }
         </script>
     </head>
     <body>
@@ -33,5 +38,6 @@
         <button onclick="example_friends()">Friends</button>
         <button onclick="example_post()">Update</button>
         <button onclick="sdk.logout()">Logout</button>
+        <button onclick="example_status()">Status</button>
     </body>
 </html>

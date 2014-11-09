@@ -48,8 +48,18 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
             return ajax.get(host + "/logoutImplicit", {}, function(res){
                 if(callback) {return callback(res);}
             });
-        } else {
+        } else if (callback) {
             return callback({status: "no token"});
+        }
+    }
+
+    this.getLoginStatus = function(callback){
+        if(token){
+            return ajax.get(host + "/api/getloginstatus", {}, function(res){
+                if(callback) {return callback(res);}
+            });
+        } else if (callback) {
+            return callback({status: "unknown"});
         }
     }
 
@@ -65,7 +75,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                 //console.log(res);
                 if(callback) {return callback(res);}
             });
-        } else {
+        } else if (callback) {
             return callback({status: "no token"});
         }
     }
@@ -82,7 +92,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                 //console.log(res);
                 if(callback) {return callback(res);}
             });
-        } else {
+        } else if (callback) {
             return callback({status: "no token"});
         }
     }
