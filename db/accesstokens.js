@@ -5,7 +5,7 @@ var TokenSchema = new mongoose.Schema({
     clientId: String,
     key: String,
     scope: [String],
-    created: { type: Date, default: Date.now }
+    created: { type: Date, default: Date.now, expires: 7200 }
 });
 
 var Token = mongoose.model('Token', TokenSchema);
