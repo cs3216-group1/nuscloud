@@ -12,7 +12,9 @@
                 <div class="app-title">
                     <h2>Register with NUSCloud</h2>
                 </div>
-            
+                <% if (locals.msg){ %>
+                    <div class="login-form alert"><p><%= msg %></p></div>
+                <%}%>  
                 <form action="/registration" method="post" class="login-form">
 	                <div class="control-group">
 	                    <input type="text" class="login-field" value="" 

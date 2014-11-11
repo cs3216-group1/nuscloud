@@ -139,6 +139,13 @@ input:focus {
     padding-bottom: 10%;
 }
 
+.alert{
+    font-family: 'Noto Sans', sans-serif;
+    color: #FF0000;
+    border-style: solid;
+    border-color: #FF0000;    
+}
+
 .details li {
     text-align: left;
 }

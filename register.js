@@ -21,28 +21,36 @@ exports.registerUser = function(req, res){
     
     db.users.findByUsername(username, function(err, user){
         if(user){
-            res.send("Username is already taken", 422);       
+            res.render('userRegistration',
+                {msg: 'Sorry! That username is already taken'}
+            );       
         } else {
             db.users.findByEmail(email, function(err, user){
                 if(user && user.activated){
-                    res.send("This email already has an account", 422);
+                    res.render('userRegistration',
+                        {msg:'This email already has an account'}
+                    );
                 } else {
                     if(username.length < 6){
-                        return res.send("Username must be at least 6 characters", 422);
+                        return res.render('userRegistration',
+                            {msg: 'Username must be at least 6 characters'}
+                        );
                     }
                     if(password.length < 8){
-                        return res.send("Password must be at least 8 characters", 422);
+                        return res.render('userRegistration',
+                            {msg: 'Password must be at least 8 characters'}
+                        );
                     }
                     if(!validateNusEmail(email)){
-                        return res.send("Please enter a valid NUS Email address", 422);
+                        return res.render('userRegistration',
+                            {msg: 'Please enter a valid NUS Email address'}
+                        );
                     }
                     sendActivationEmail(name, activationId, email);
                     db.users.save(username, password, name, email, userId, activationId, 
                         function(err, user){
-                            console.log("Step One");
                             if (err) { throw err; }
                                 req.logIn(user, function(err) {
-                                    console.log("Step Two");
                                     if (err) { throw err; }
                                     return res.redirect('/account');
                                 });
