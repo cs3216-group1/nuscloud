@@ -4,6 +4,7 @@
 var oauth2orize = require('oauth2orize'),
     passport = require('passport'),
     login = require('connect-ensure-login'),
+    register = require('./register'),
     db = require('./db'),
     utils = require('./utils');
 
@@ -187,6 +188,7 @@ server.exchange(oauth2orize.exchange.clientCredentials(function(client, scope, d
 
 exports.authorization = [
   login.ensureLoggedIn(),
+  register.isActivated,
   server.authorization(function(clientID, redirectURI, done) {
     db.clients.findByClientId(clientID, function(err, client) {
       if (err) { return done(err); }
@@ -258,6 +260,7 @@ exports.authorization = [
 
 exports.decision = [
   login.ensureLoggedIn(),
+  register.isActivated,
   server.decision(function(req, done){
     var userId = req.user.userId;
     var clientId = req.oauth2.client.clientId;

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title><%= title %></title>
+        <% include common-links.ejs %>    
+    </head>
+    <body>
+        <% include public-navbar.ejs %> 
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2><%= title %></h2>
+                </div>
+                <div class="login-form details">
+                    <p><%- msg %></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

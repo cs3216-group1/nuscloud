@@ -1,6 +1,7 @@
 var passport = require('passport'),
     login = require('connect-ensure-login'),
-    db = require('./db');
+    db = require('./db'),
+    register = require('./register');
 
 exports.index = function(req, res){
     res.render('homepage');
@@ -28,6 +29,7 @@ exports.logout = function(req, res){
 
 exports.account = [
     login.ensureLoggedIn(),
+    register.isActivated,
     function(req, res){
         res.render('account', { user: req.user });
     }
@@ -35,6 +37,7 @@ exports.account = [
 
 exports.appdetails = [
     login.ensureLoggedIn(),
+    register.isActivated,
     function(req, res){
         db.clients.findByUserId(req.user.userId, function(err, apps){
             res.render('appdetails', { apps: apps });
@@ -44,6 +47,7 @@ exports.appdetails = [
 
 exports.userappdetails = [
     login.ensureLoggedIn(),
+    register.isActivated,
     function(req, res){
         db.permissions.findByUserId(req.user.userId, function(err, perms){
             var render = function(){
@@ -68,6 +72,7 @@ exports.userappdetails = [
 
 exports.userappdata = [
     login.ensureLoggedIn(),
+    register.isActivated,
     function(req, res){
         var userId = req.user.userId;
         var clientId = req.params.clientId;

@@ -70,8 +70,12 @@ app.get('/account/dev', site.appdetails);
 app.get('/account/apps', site.userappdetails);
 app.get('/account/apps/:clientId', site.userappdata);
 
+app.get('/activate', register.activateUser);
+app.get('/resend-activation-link', register.generateActivationId);
+
 app.get('/registration', register.registerFormUser);
 app.post('/registration', register.registerUser);
+
 app.get('/client/registration', register.registerFormClient);
 app.post('/client/registration', register.registerClient);
 
