@@ -249,7 +249,7 @@ exports.apiGetFriends = function(req, res, next){
             else if (info.scope.indexOf('friends-read') === -1){
                 return res.status(401).json({status: 'unauthorized'});
             } else {
-                db.users.getFriends(userId, function(err, userList){
+                db.users.getFriends(user.userId, function(err, userList){
                     if(err) { throw err; }
                     res.status(200).json({status: 'ok', friends: userList});
                 });
