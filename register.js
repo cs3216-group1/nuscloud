@@ -2,7 +2,8 @@ var db = require('./db'),
     utils = require('./utils'),
     login = require('connect-ensure-login'),
     config = require('./config'),
-    mandrill = require('mandrill-api');
+    mandrill = require('mandrill-api'),
+    validator = require('validator');
 
 exports.registerFormUser = function(req, res){
     res.render('userRegistration');
@@ -31,9 +32,14 @@ exports.registerUser = function(req, res){
                         {msg:'This email already has an account'}
                     );
                 } else {
-                    if(username.length < 6){
+                    if(!validator.isAlpha(name)){
                         return res.render('userRegistration',
-                            {msg: 'Username must be at least 6 characters'}
+                            {msg: 'Name must be alphabets a-z and A-Z only'}
+                        );
+                    }
+                    if(username.length < 6 || !validator.isAlphanumeric(name)){
+                        return res.render('userRegistration',
+                            {msg: 'Username must be at least 6 characters and alphanumeric'}
                         );
                     }
                     if(password.length < 8){
@@ -41,7 +47,7 @@ exports.registerUser = function(req, res){
                             {msg: 'Password must be at least 8 characters'}
                         );
                     }
-                    if(!validateNusEmail(email)){
+                    if(!validateNusEmail(email) || !validator.isEmail(email)){
                         return res.render('userRegistration',
                             {msg: 'Please enter a valid NUS Email address'}
                         );
@@ -153,8 +159,17 @@ exports.registerClient = [
         var clientSecret = utils.uid(20);
         db.clients.findByClientNamespace(namespace, function(err, client){
             if(client){
-                res.send("App namespace is already taken", 422);
+                return res.send("App namespace is already taken", 422);
             } else {
+                if(name.length<5 || !validator.isAlphanumeric(name)){
+                    return res.send("App name must be at least 5 alphanumeric chars", 422);
+                }
+                if(namespace.length<5 || !validator.isAlphanumeric(name)){
+                    return res.send("App namespace must be at least 5 alphanumeric chars", 422);
+                }
+                if(!validator.isURL(domain)){
+                    return res.send("Please enter a valid URL as the domain (include the http://)", 422);
+                }
                 db.clients.save(name, clientId, clientSecret, domain, namespace, req.user.userId, 
                     function(err, client){
                         return res.redirect('/account/dev');
