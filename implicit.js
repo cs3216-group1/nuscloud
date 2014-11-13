@@ -26,11 +26,12 @@ exports.login = function(req, res, next){
         });
         if (!user){
             res.redirect('/loginImplicit?' + urlParams);
+        } else {
+            req.logIn(user, function(err) {
+                if (err) { throw err;}
+                return res.redirect('/dialog/authorize?response_type=token&' + urlParams);
+            });
         }
-        req.logIn(user, function(err) {
-            if (err) { throw err;}
-            return res.redirect('/dialog/authorize?response_type=token&' + urlParams);
-        });
     })(req, res, next);
 }
 
