@@ -13,19 +13,20 @@
                     <h1>Your NUSCloud Account</h1>
                 </div>
                 <div class="login-form details">
-                    <div><p>Username: <%= user.username %></p></div>
-                    <div><p>Name: <%= user.name %></p></div>
+                    <h3><%= user.name %></h3>
+                    <div><p><b>Username: </b><%= user.username %></p></div>
+                    <div><p><b>Email: </b><%= user.email %></p></div> 
                 </div>
             </div>
             <div class="detail-screen-left">
                 <div class="login-form details">
                     <p>Use your account to <b>log in</b> to NUSCloud applications</p>
-                    <a class="nuscloud-btn btn-account" href="/account/apps">Your Apps</a>
-                   <p></p> <p>Features coming soon:
+                    <a class="nuscloud-btn btn-account" href="/account/apps">Apps You Use</a>
+                    <a class="nuscloud-btn btn-account" href="/friends">Friends</a>
+                   <p>Features coming soon:
                         <ul>
                             <li>Permission controls</li>
                             <li>Account management</li>
-                            <li>Adding friends on NUSCloud</li>
                             <li>Privacy control</li>
                         </ul>
                     </p>
@@ -35,8 +36,8 @@
                 <div class="login-form details">
                     <p>Use your account to <b>make</b> NUSCloud applications</p>
                     <p>Build NUS web apps quickly and easily</p>
-                    <a class="nuscloud-btn btn-account" href="/client/registration">Create</a>
-                    <a class="nuscloud-btn btn-account" href="/account/dev">Manage</a>
+                    <a class="nuscloud-btn btn-account" href="/client/registration">Create Apps</a>
+                    <a class="nuscloud-btn btn-account" href="/account/dev">App Admin</a>
                     <a class="nuscloud-btn btn-account" href="/">Docs</a>
                 </div>
             </div>
