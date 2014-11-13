@@ -97,15 +97,16 @@ app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);
 app.post('/oauth/token', oauth2.token);
 
-app.get('/api/me/info', cors(corsOptions), api.getUserInfo);
-app.post('/api/me/info', cors(corsOptions), api.editUserInfo);
+app.get('/api/:userId/userinfo', cors(corsOptions), api.getUserInfo);
+app.get('/api/:appId/appinfo', cors(corsOptions), api.getAppInfo);
+//app.post('/api/:userId/info', cors(corsOptions), api.editUserInfo);
 
-app.get('/api/me/app/*', cors(corsOptions), api.getUserAppInfo);
-app.post('/api/me/app/*', cors(corsOptions), api.editUserAppInfo);
-app.delete('/api/me/app/*', cors(corsOptions), api.deleteUserAppInfo);
+app.get('/api/:userId/friends', cors(corsOptions), friends.apiGetFriends);
 
-app.get('/api/me/appinfo', cors(corsOptions), client.info);
+app.get('/api/:userId/:appId/*', cors(corsOptions), api.getUserAppInfo);
+app.post('/api/:userId/:appId/*', cors(corsOptions), api.editUserAppInfo);
+app.delete('/api/:userId/:appId/*', cors(corsOptions), api.deleteUserAppInfo);
 
-app.get('/api/me/friends', cors(corsOptions), friends.apiGetFriends);
+
 
 http.createServer(app).listen(3000);

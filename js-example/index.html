@@ -10,7 +10,12 @@
             });
         }
         function example_info(){
-            return sdk.get('me/app/nested', function(res){
+            return sdk.get('me/userinfo', function(res){
+                console.log(res);
+            });
+        }
+        function example_app_info(){
+            return sdk.get('/app/appinfo', function(res){
                 console.log(res);
             });
         }
@@ -33,7 +38,8 @@
     </head>
     <body>
         <button onclick="sdk.login()">Login</button>
-        <button onclick="example_info()">Info</button>
+        <button onclick="example_info()">User Info</button>
+        <button onclick="example_app_info()">App Info</button>
         <button onclick="example_get_all()">All</button>
         <button onclick="example_friends()">Friends</button>
         <button onclick="example_post()">Update</button>

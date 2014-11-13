@@ -251,7 +251,10 @@ exports.apiGetFriends = function(req, res, next){
             } else {
                 db.users.getFriends(user.userId, function(err, userList){
                     if(err) { throw err; }
-                    res.status(200).json({status: 'ok', friends: userList});
+                    var friendsList = userList.map(function(user){
+                        return {userId: user.userId, name: user.name}
+                    });
+                    res.status(200).json({status: 'ok', friends: friendsList});
                 });
             }
         }

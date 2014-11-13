@@ -36,6 +36,10 @@ exports.findByUserId = function(id, done){
         .exec(done);
 }
 
+exports.findAllByUserId = function(id, done){
+    User.findOne({userId: id}).lean().exec(done);
+}
+
 exports.findByUsername = function(username, done){
     User.findOne({username: username}, 'userId name email username activated')
         .lean()
