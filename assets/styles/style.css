@@ -122,6 +122,13 @@ input:focus {
     padding: 0;
 }
 
+.btn-friends{
+    width: 40%;
+    float: right;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .nuscloud-btn:hover {
     background-color: #2980B9;
     cursor: pointer;
@@ -160,3 +167,27 @@ input:focus {
     display: block;
     margin-top: 12px;
 }
+
+.friendslist {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.friendslist ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.requestlist {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.requestlist ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+

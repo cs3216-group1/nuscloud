@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Friends</title>
+        <% include common-links.ejs %>
+    </head>
+    <body>
+        <% include user-navbar.ejs %>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Friends</h1>
+                    <br><a class="nuscloud-btn" href="/friends/add">Add More Friends</a>
+                </div>
+            </div>
+            <div class="login-screen hide" id="request-div">
+                <div class="app-title">
+                    <h2>Friend Requests</h2>
+                </div>
+                <div class="requestlist">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="login-screen hide" id="friends-div">
+                <div class="app-title">
+                    <h2>Friends List</h2>
+                </div>
+                <div class="friendslist">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="login-screen details hide" id="zero-friends-div">
+                You haven't added friends! Add some to enjoy sharing in NUSCloud Apps.
+            </div>
+        </div>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
+        <script src="/js/view-friends.js"></script>
+    </body>
+</html> 

@@ -70,6 +70,14 @@ app.get('/account/dev', site.appdetails);
 app.get('/account/apps', site.userappdetails);
 app.get('/account/apps/:clientId', site.userappdata);
 
+app.get('/friends', friends.viewFriends);
+app.get('/friends/add', friends.viewAddFriends);
+app.get('/friends/search', friends.getNotFriends);
+app.get('/friends/pending', friends.getReceivedRequests);
+app.get('/friends/list', friends.getFriends);
+app.post('/friends/request', friends.sendRequest);
+app.post('/friends/confirm', friends.confirmRequest);
+
 app.get('/activate', register.activateUser);
 app.get('/resend-activation-link', register.generateActivationId);
 
@@ -98,6 +106,6 @@ app.delete('/api/me/app/*', cors(corsOptions), api.deleteUserAppInfo);
 
 app.get('/api/me/appinfo', cors(corsOptions), client.info);
 
-app.get('/api/me/friends', cors(corsOptions), friends.dummyData);
+app.get('/api/me/friends', cors(corsOptions), friends.apiGetFriends);
 
 http.createServer(app).listen(3000);

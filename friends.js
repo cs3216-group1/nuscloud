@@ -1,35 +1,259 @@
-var passport = require('passport');
+var passport = require('passport'),
+    login = require('connect-ensure-login'),
+    register = require('./register'),
+    db = require('./db');
 
-exports.dummyData = function(req, res, next){
-    passport.authenticate('bearer', {session: false}, function(err, user, info){
-        if(err || !user){ return res.status(404).json({status: 'error'}); }
-        else if (info.scope.indexOf('friends-read') === -1){
-            return res.status(401).json({status: 'unauthorized'});
-        } else {
-            return res.json({
-                status: 'ok',
-                friends: [{
-                    id: 11,
-                    name: 'Alice',
-                    queryString: 'MNO1001[SEC]=A3&ACC1002[LEC]=V2&ACC1002[TUT]=V02&GEM1031[SEM]=1&BSP1004[SEC]=A1&DSC1007[SEC]=B1'
-                }, {
-                    id: 21,
-                    name: 'Bob',
-                    queryString: 'MA1521[LEC]=SL1&MA1521[TUT]=T02&MA1101R[LEC]=SL1&MA1101R[LAB]=B07&MA1101R[TUT]=T07&CS1231[SEC]=2&CS1231[TUT]=8&CS1101S[LEC]=1&CS1101S[TUT]=4&CS1101S[REC]=5&UWC2101B[SEM]=1'
-                }, {
-                    id: 32,
-                    name: 'Charlie',
-                    queryString: 'MNO2007[SEC]=G1&BSP2001[LEC]=X1&BSP2001[TUT]=X02&ACC2002[LEC]=B2&ACC2002[TUT]=B02&FIN2004[SEC]=J06&GEK1542[LEC]=SL1'
-                }, {
-                    id: 43,
-                    name: 'Dave',
-                    queryString: 'ST2334[LEC]=SL1&ST2334[TUT]=T4&CS2106[LEC]=1&CS2106[TUT]=4&CS2106[LAB]=1&CS2105[LEC]=1&CS2105[TUT]=4&CS2103[LEC]=1&CS2103[TUT]=2&CS2102[LEC]=1&CS2102[TUT]=7'
-                }, {
-                    id: 54,
-                    name: 'Eric',
-                    queryString: 'CS4212[LEC]=1&PH1102E[LEC]=1&PH1102E[TUT]=W1&CS2102[LEC]=1&CS2102[TUT]=7&CS3216[LEC]=1&CS3216[TUT]=2&CS4232[LEC]=1&CS4232[TUT]=1'
-                }]
-            });
+exports.viewFriends = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        res.render('viewFriends');
+    }
+]
+
+exports.viewAddFriends = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        res.render('addFriends');
+    }
+]
+
+/*
+exports.viewAdd = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var notFriendsList = null;
+        var friendReqsSentList = null;
+        var friendReqsRcvdList = null;
+        var friendsList = null;
+        db.users.getNotFriends(req.user.userId, function(err, result){{
+            if(err) { done(err); }
+            notFriendsList = result;
+            callRenderer();
         }
-    })(req, res, next);   
+        db.users.getFriendRequestsReceived(req.user.userId, function(err, result){
+            if(err) { done(err); }
+            friendsReqsRcvdList = result;
+            callRenderer();
+        }
+        db.users.getFriendRequestsSent(req.user.userId, function(err, result){
+            if(err) { done(err); }
+            friendReqsSentList = result;
+            callRenderer();
+        }
+        db.users.getFriends(req.user.userId, function(err, result){
+            if(err) { done(err); }
+            friendsList = result;
+            callRenderer();
+        }
+        var callRenderer = function(){
+            if(notFriendsList && friendsList && 
+                friendsReqsRcvdList && friendReqsSentList){
+                res.render('friends', {
+                    'friends': friendsList, 
+                    'received': friendsReqsRcvdList,
+                    'sent': friendsReqsSentList,
+                    'rest': notFriendsList 
+                });
+            } else {
+                return;
+            }
+        }
+    }
+]*/
+
+exports.sendRequest = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var senderId = req.user.userId;
+        var receiverId = req.body.userId;
+        var sender, receiver;
+        function done(err){
+            if(err) { throw (err); }
+            if(sender && receiver){
+                res.status(200).send({status: 'ok'});
+            }
+        }
+        db.users.addFriendRequestSent(senderId, receiverId, function(err, user){
+            sender = user;
+            done(err);
+        });
+        db.users.addFriendRequestReceived(receiverId, senderId, function(err, user){
+            receiver = user;
+            done(err);
+        });
+    }
+]
+
+exports.getSentRequests = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var userId = req.user.userId;
+        db.users.getFriendRequestsSent(userId, function(err, userList){
+            if(err) { throw err; }
+            res.status(200).json({status: 'ok', users: userList});
+        });
+    }
+]
+
+exports.retractSentRequest = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var senderId = req.user.userId;
+        var receiverId = req.body.userId;
+        var sender, receiver;
+        function done(err){
+            if(err) { throw (err); }
+            if(sender && receiver){
+                res.status(200).send({status: 'ok'});
+            }
+        }
+        db.users.removeFriendRequestSent(senderId, receiverId, function(err, user){
+            sender = user;
+            done(err);
+        });
+        db.users.removeFriendRequestReceived(receiverId, senderId, function(err, user){
+            receiver = user;
+            done(err);
+        });
+    }
+]
+
+exports.confirmRequest = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var receiverId = req.user.userId;
+        var senderId = req.body.userId;
+        console.log(receiverId);
+        console.log(senderId);
+        var sender, receiver;
+        function done(err){
+            if(err) { throw (err); }
+            if(sender && receiver){
+                res.status(200).send({status: 'ok'});
+            }
+        }
+        db.users.removeFriendRequestSent(senderId, receiverId, function(err, user){
+            if(err) { done(err); }
+            db.users.addFriend(senderId, receiverId, function(err, user){
+                sender = user;
+                done(err);
+            });
+        });
+        db.users.removeFriendRequestReceived(receiverId, senderId, function(err, user){
+            if(err) { done(err); }
+            db.users.addFriend(receiverId, senderId, function(err, user){
+                receiver = user;
+                done(err);
+            });
+        });
+    }
+]
+
+exports.getReceivedRequests = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var userId = req.user.userId;
+        db.users.getFriendRequestsReceived(userId, function(err, userList){
+            if(err) { throw err; }
+            res.status(200).json({status: 'ok', users: userList});
+        });
+    }
+]
+
+exports.deleteReceivedRequest = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var receiverId = req.user.userId;
+        var senderId = req.body.userId;
+        var sender, receiver;
+        function done(err){
+            if(err) { throw (err); }
+            if(sender && receiver){
+                res.status(200).send({status: 'ok'});
+            }
+        }
+        db.users.removeFriendRequestSent(senderId, receiverId, function(err, user){
+            sender = user;
+            done(err);
+        });
+        db.users.removeFriendRequestReceived(receiverId, senderId, function(err, user){
+            receiver = user;
+            done(err);
+        });
+    }
+]
+
+exports.getFriends = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var userId = req.user.userId;
+        db.users.getFriends(userId, function(err, userList){
+            if(err) { throw err; }
+            res.status(200).json({status: 'ok', users: userList});
+        });
+    }
+]
+
+exports.getNotFriends = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var userId = req.user.userId;
+        db.users.getNotFriends(userId, function(err, userList){
+            if(err) { throw err; }
+            console.log(userList);
+            res.status(200).json({status:'ok', users: userList});
+        });
+    }
+]
+
+exports.deleteFriend = [
+    login.ensureLoggedIn(),
+    register.isActivated,
+    function(req, res){
+        var deleterId = req.user.userId;
+        var otherId = req.body.userId;
+        var deleter, other;
+        function done(err){
+            if(err) { throw (err); }
+            if(deleter && other){
+                res.status(200).send({status: 'ok'});
+            }
+        }
+        db.users.removeFriend(deleterId, otherId, function(err, user){
+            deleter = user;
+            done(err);
+        });
+        db.users.removeFriend(otherId, deleterId, function(err, user){
+            other = user;
+            done(err);
+        });
+    }
+]
+
+exports.apiGetFriends = function(req, res, next){
+    passport.authenticate('bearer', { session: false },
+        function(err, user, info){
+            if(err) { return res.status(404).json({status: 'error'}); }
+            if(!user) { return res.status(400).json({status: 'error'});}
+            else if (info.scope.indexOf('friends-read') === -1){
+                return res.status(401).json({status: 'unauthorized'});
+            } else {
+                db.users.getFriends(userId, function(err, userList){
+                    if(err) { throw err; }
+                    res.status(200).json({status: 'ok', friends: userList});
+                });
+            }
+        }
+    )(req, res, next);
 }
