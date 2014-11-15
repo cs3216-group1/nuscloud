@@ -193,6 +193,7 @@ exports.authorization = [
   server.authorization(function(clientID, redirectURI, done) {
     db.clients.findByClientId(clientID, function(err, client) {
       if (err) { return done(err); }
+      if (!client) { return done("No such app"); }{
       if (url.parse(redirectURI).host === url.parse(client.domain).host){
         return done(null, client, redirectURI);
       } else {
