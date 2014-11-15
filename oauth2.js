@@ -6,7 +6,8 @@ var oauth2orize = require('oauth2orize'),
     login = require('connect-ensure-login'),
     register = require('./register'),
     db = require('./db'),
-    utils = require('./utils');
+    utils = require('./utils'),
+    url = require('url');
 
 // create OAuth 2.0 server
 var server = oauth2orize.createServer();
@@ -192,11 +193,11 @@ exports.authorization = [
   server.authorization(function(clientID, redirectURI, done) {
     db.clients.findByClientId(clientID, function(err, client) {
       if (err) { return done(err); }
-      // WARNING: For security purposes, it is highly advisable to check that
-      //          redirectURI provided by the client matches one registered with
-      //          the server.  For simplicity, this example does not.  You have
-      //          been warned.
-      return done(null, client, redirectURI);
+      if (url.parse(redirectURI).host === url.parse(client.domain).host){
+        return done(null, client, redirectURI);
+      } else {
+        return done("Wrong domain");
+      }
     });
   }),
   function(req, res, next){
