@@ -19,6 +19,9 @@ exports.getData = function(clientId, userId, path, done){
             pathArray = pathArray.slice(1);
         }
         var currObj = obj.data;
+        if(!currObj){
+            return done(false, true);
+        }
         for(var key in pathArray){
             if(!currObj){
                 return done(false, true);
