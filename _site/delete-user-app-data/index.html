@@ -1,0 +1,23 @@
+<p>This method deletes users data for the specified app at the speicified path.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to delete info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to delete data for current logged in app.</p>
+
+<p>As of now, this request can only be made by the currently logged in app.</p>
+
+<h3 id="response">Response</h3>
+
+<p>Returns the status of the delete operation.</p>
+
+<p><code>{
+    status: 'ok'
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>

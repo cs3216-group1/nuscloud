@@ -1,0 +1,37 @@
+<p>This method returns users data for the specified app at the specified path.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to get info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to get data for current logged in app.</p>
+
+<p>If not made by the app itself, requires <strong>(app-namespace)-read</strong> permission, where (app-namespace) is the namespace of the app whose data would be read</p>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back an object containing info stored at the path.</p>
+
+<p>This endpoint supports nesting. In a case where a request to <em>/me/app/example</em> returns this:</p>
+
+<p><code>{
+    status: 'ok',
+    data: {
+        category: 'basket',
+        apples: 3,
+        type: 'fresh',
+    }
+}</code></p>
+
+<p>Then a request to <em>/me/app/example/apples</em> would return this:</p>
+
+<p><code>{
+    status: 'ok',
+    data: 3 
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>

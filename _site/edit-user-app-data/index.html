@@ -1,0 +1,41 @@
+<p>This method edits user info for the app at the specified path.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<ul>
+  <li><strong>Request body sent cannot be empty</strong> and must include a <strong>data</strong> attribute containing the data to be put at the specified path. The data attribute can be either a Javascript Object or a primitive data type (Number, Boolean, String)</li>
+</ul>
+
+<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to edit info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to edit data for current logged in app.</p>
+
+<p>As of now, this request can only be made by the currently logged in app.</p>
+
+<p>This endpoint supports nesting. A request to <em>/me/app/example</em> with this data:</p>
+
+<p><code>{
+    data: {
+        apples: 3
+    }
+}</code></p>
+
+<p>Is equivalent to this request to <em>/me/app/example/apples</em>:</p>
+
+<p><code>{
+    data: 3 
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p>The response contains the status of the operation.</p>
+
+<p><code>{
+    status: 'ok' 
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>

@@ -1,0 +1,66 @@
+<p>The Javascript SDK is the recommended way to integrate your app with NUSCloud.</p>
+
+<h3 id="setup">Setup</h3>
+
+<p>You can register a new app <a href="http://nuscloud.jishnumohan.com/client/registration">here</a>. Ensure that a correct domain is provided and take note of your app Id.</p>
+
+<p>Include the following HTML code in your webpage to load the SDK.</p>
+
+<p><code>
+&lt;script src="http://nuscloud.jishnumohan.com/sdk/sdk.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+var host = "http://nuscloud.jishnumohan.com";
+var redirect_url = "some-page-on-your-site";
+var app_id = "your-app-id";
+var permissions = "info-read";
+var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
+&lt;/script&gt;
+</code></p>
+
+<h3 id="details">Details</h3>
+
+<p>Each element mentioned above is explained below</p>
+
+<h4 id="host">Host</h4>
+
+<p>The URL hosting NUSCloud</p>
+
+<h4 id="redirect-url">Redirect URL</h4>
+
+<p>When the user logs in, he/she is redirected momentarily (in a popup window) to a page of your website momentarily for your site to receive the relevant NUSCloud access token.</p>
+
+<p>The point to note here is to provide a webpage of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues)</p>
+
+<h4 id="app-id">App Id</h4>
+
+<p>This is a unique identifier for your app provided on registration.</p>
+
+<h4 id="permissions">Permissions</h4>
+
+<p>This is a space separated string of the permissions you want to request the user for. As of now, the user can either accept or reject all permissions.</p>
+
+<p>Permissions that can be requested are:</p>
+
+<ul>
+  <li><strong>'’info-read’‘</strong> - to read users basic information (name, username, email)</li>
+  <li><strong>'’friends-read’‘</strong> - to access friends of the user using the app and allow the user to be accessed by friends using the app</li>
+  <li><strong>’‘(app-namespace)-read’‘</strong> - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)</li>
+</ul>
+
+<h3 id="requests">Requests</h3>
+
+<p>Other than authentication, discussed separately, all requests through the sdk are made in the following formats:</p>
+
+<p><code>nuscloud.get(path, callback)</code></p>
+
+<p><code>nuscloud.post(path, data, callback)</code></p>
+
+<p><code>nuscloud.delete(path, callback)</code></p>
+
+<p>where</p>
+
+<ul>
+  <li><strong>path</strong> is a URL path String</li>
+  <li><strong>data</strong> is an object</li>
+  <li><strong>callback</strong> is a function that takes in one response argument</li>
+</ul>

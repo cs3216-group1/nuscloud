@@ -1,0 +1,27 @@
+<h3 id="login">Login</h3>
+
+<p>Login through the SDK is straightforward. If initialized as earlier:</p>
+
+<p><code>nuscloud.login(callback)</code></p>
+
+<p>will initiliaze login. If the user is already logged in to NUSCloud and has provided all permissions to your app, there will not be any prompt. Else, he will be prompted to login via a NUSCloud popup and to provide any needed permissions.</p>
+
+<h3 id="logout">Logout</h3>
+
+<p>Logout is also straightforward</p>
+
+<p><code>nuscloud.logout(callback)</code></p>
+
+<p>will logout the user from the app by deactivating any access tokens provided.</p>
+
+<h3 id="status">Status</h3>
+
+<p><code>nuscloud.getLoginStatus(callback)</code></p>
+
+<p>will provide the users status as a response to the callback. The possible results are:</p>
+
+<ul>
+  <li><strong>{status: unknown}</strong> - if the user is not logged into NUSCloud</li>
+  <li><strong>{status: unauthorized}</strong> - if the user is logged in and has not authorized the app</li>
+  <li><strong>{status: connected}</strong> - user is logged in and app has a valid token</li>
+</ul>

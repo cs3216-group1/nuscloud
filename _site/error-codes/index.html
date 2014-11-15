@@ -1,0 +1,9 @@
+<p>Each operation returns a response with a status attribute. If the status is <strong>ok</strong>, all is good. Else possible errors are:,</p>
+
+<ul>
+  <li><strong>{status: error}</strong> - Unrecognized error</li>
+  <li><strong>{status: bad token}</strong> - Invalid token</li>
+  <li><strong>{status: bad endpoint}</strong> - This endpoint does not specify a resource</li>
+  <li><strong>{status: unauthorized}</strong> - Absence of required permissions</li>
+  <li><strong>{status: absent}</strong> - Recognizes the endpoint, but currently has no data</li>
+</ul>

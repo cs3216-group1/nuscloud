@@ -1,0 +1,33 @@
+<p>This method returns users friends using the app.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>A special case of this request substitutes <strong>me</strong> for <strong>:userId</strong> to get info of the logged in user</p>
+
+<p>Requires <strong>friends-read</strong> permission</p>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back an object containing list of friends of the user.</p>
+
+<p><code>{
+    status: 'ok'
+    friends: [
+        { 
+            name: 'Good Friend'
+            userId: 'defgh1234'
+        },
+        {
+            name: 'Tom Tomson'
+            userId: 'tomtom123'
+        }
+    ]
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>

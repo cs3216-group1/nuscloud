@@ -1,0 +1,25 @@
+<p>This method returns the basic info of the app which is logged in.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>A special case of this request substitutes <strong>app</strong> for <strong>:appId</strong> to get info of the logged in user</p>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back an object containing info of the user.</p>
+
+<p><code>{
+    status: 'ok',
+    info: {
+        name: 'Cool App',
+        namespace: 'coolapp'
+    }
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>
