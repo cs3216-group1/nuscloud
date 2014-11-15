@@ -96,6 +96,10 @@ exports.isActivated = function(req, res, next){
     if(req.user.activated){
         next();
     } else {
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.header("Pragma", "no-cache");
+        res.header("Expires", 0);
+
         res.render('loggedInMessage', {
             title: 'NUSCloud Account Not Activated',
             msg: 'Please activate your account to use NUSCloud.'
