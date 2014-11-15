@@ -8,15 +8,15 @@ The Javascript SDK is the recommended way to integrate your app with NUSCloud.
 
 ### Setup
 
-You can register a new app [here](http://nuscloud.jishnumohan.com/client/registration). Ensure that a correct domain is provided and take note of your app Id.
+You can register a new app [here](http://nuscloud.com/client/registration). Ensure that a correct domain is provided and take note of your app Id.
 
 Include the following HTML code in your webpage to load the SDK.
  
 
 ```
-<script src="http://nuscloud.jishnumohan.com/sdk/sdk.js"></script>
+<script src="http://nuscloud.com/sdk/sdk.js"></script>
 <script>
-var host = "http://nuscloud.jishnumohan.com";
+var host = "http://nuscloud.com";
 var redirect_url = "some-page-on-your-site";
 var app_id = "your-app-id";
 var permissions = "info-read";
