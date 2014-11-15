@@ -13,10 +13,10 @@ exports.registerUser = function(req, res){
     
     //TODO Validate username and password
 
-    var username = req.body.username;
-    var password = req.body.password;
-    var name = req.body.name;
-    var email = req.body.email;
+    var username = validator.escape(req.body.username);
+    var password = validator.escape(req.body.password);
+    var name = validator.escape(req.body.name);
+    var email = validator.escape(req.body.email);
     var userId = utils.uid(12);
     var activationId = utils.uid(20);
     
@@ -32,12 +32,7 @@ exports.registerUser = function(req, res){
                         {msg:'This email already has an account'}
                     );
                 } else {
-                    if(!validator.isAlpha(name)){
-                        return res.render('userRegistration',
-                            {msg: 'Name must be alphabets a-z and A-Z only'}
-                        );
-                    }
-                    if(username.length < 6 || !validator.isAlphanumeric(name)){
+                    if(username.length < 6 || !validator.isAlphanumeric(username)){
                         return res.render('userRegistration',
                             {msg: 'Username must be at least 6 characters and alphanumeric'}
                         );
@@ -151,20 +146,19 @@ exports.registerClient = [
     login.ensureLoggedIn(),
     exports.isActivated,
     function(req, res) {
-        //TODO Validate name
-        var name = req.body.name;
-        var namespace = req.body.namespace;
-        var domain = req.body.domain;
+        var name = validator.escape(req.body.name);
+        var namespace = validator.escape(req.body.namespace);
+        var domain = validator.escape(req.body.domain);
         var clientId = utils.uid(12);
         var clientSecret = utils.uid(20);
         db.clients.findByClientNamespace(namespace, function(err, client){
             if(client){
                 return res.send("App namespace is already taken", 422);
             } else {
-                if(name.length<5 || !validator.isAlphanumeric(name)){
+                if(name.length < 5){
                     return res.send("App name must be at least 5 alphanumeric chars", 422);
                 }
-                if(namespace.length<5 || !validator.isAlphanumeric(name)){
+                if(namespace.length < 5 || !validator.isAlphanumeric(namespace)){
                     return res.send("App namespace must be at least 5 alphanumeric chars", 422);
                 }
                 if(!validator.isURL(domain)){
