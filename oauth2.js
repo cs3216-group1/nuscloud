@@ -267,10 +267,14 @@ exports.decision = [
     var userId = req.user.userId;
     var clientId = req.oauth2.client.clientId;
     var scope = req.body.scope;
-    db.permissions.addArray(userId, clientId, JSON.parse(scope), function(err, doc){
-      if (err) { console.log(err); }
-      return done(null, { scope: req.body.scope });
-    });
+    if (!req.body.cancel){
+        db.permissions.addArray(userId, clientId, JSON.parse(scope), function(err, doc){
+            if (err) { done(err); }
+                return done(null, { scope: req.body.scope, allow: true});
+        });
+    } else {
+        return done(null, { allow: false }); //Will be handled by the library
+    }
   })
 ]
 
