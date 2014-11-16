@@ -43,10 +43,10 @@ exports.getData = function(clientId, userId, path, done){
 exports.deleteData = function(clientId, userId, path, done){ 
    AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
         if (err) { return done(err);}
-        if(!obj){
+        if(!doc){
             return done(false, true);
         }
-	if(!obj.data){
+	if(!doc.data){
 	    return done(false, true);
 	}
         var pathArray = path.split('/');
@@ -83,13 +83,8 @@ exports.deleteData = function(clientId, userId, path, done){
 exports.putData = function(clientId, userId, path, data, done){
     AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
         if (err) { return done(err);}
+	if (!doc) { return done(err); }
         if (!doc.data) { doc.data = {} }
-        if(!obj){
-            return done(false, true);
-        }
-	if(!obj.data){
-	    return done(false, true);
-	}
         var currData = doc.data;
         var pathArray = path.split('/');        
         if(pathArray[pathArray.length - 1] == ""){
