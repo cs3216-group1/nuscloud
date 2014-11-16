@@ -62,6 +62,10 @@ Other than authentication, discussed separately, all requests through the sdk ar
 
 ```nuscloud.delete(path, callback)```
 
+###Responses
+
+The response format will be the JSON string representation of the object types specified in each method
+
 where
 
 - **path** is a URL path String
