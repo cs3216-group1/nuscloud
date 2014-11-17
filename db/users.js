@@ -3,13 +3,13 @@ var mongoose = require('mongoose'),
 
 var ActivationSchema = new mongoose.Schema({
     id: String,
-    createdAt: { type: Date, expires: 86400, default: Date.now }
+    createdAt: { type: Date, default: Date.now }
 });
 
 var ForgotSchema = new mongoose.Schema({
     isUtilized: Boolean,
     id: String,
-    createdAt: { type: Date, expires: 86400, default: Date.now }
+    createdAt: { type: Date, default: Date.now }
 });
 
 var UserSchema = new mongoose.Schema({
