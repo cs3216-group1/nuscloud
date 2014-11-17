@@ -8,7 +8,11 @@ exports.index = function(req, res){
 }
 
 exports.loginForm = function(req, res){
-    res.render('login');
+    if(req.isAuthenticated()){
+        res.redirect('/account');
+    } else {
+        res.render('login');
+    }
 }
 
 exports.login = passport.authenticate('local', {
