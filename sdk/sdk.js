@@ -78,7 +78,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                 if(callback) {return callback(res);}
             });
         } else if (callback) {
-            return callback({status: "unknown"});
+            return callback(JSON.stringify({status: "unknown"}));
         }
     }
 

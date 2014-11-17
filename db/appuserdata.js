@@ -19,10 +19,13 @@ exports.getData = function(clientId, userId, path, done){
         if(pathArray[0] == ""){
             pathArray = pathArray.slice(1);
         }
-        var currObj = obj.data;
-        if(!currObj){
+        if(!obj){
             return done(false, true);
         }
+	if(!obj.data){
+	    return done(false, true);
+	}
+        var currObj = obj.data;
         for(var key in pathArray){
             if(!currObj){
                 return done(false, true);
@@ -41,6 +44,12 @@ exports.getData = function(clientId, userId, path, done){
 exports.deleteData = function(clientId, userId, path, done){ 
    AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
         if (err) { return done(err);}
+        if(!doc){
+            return done(false, true);
+        }
+	if(!doc.data){
+	    return done(false, true);
+	}
         var pathArray = path.split('/');
         if(pathArray[pathArray.length - 1] == ""){
             pathArray = pathArray.slice(0,-1);
@@ -75,6 +84,7 @@ exports.deleteData = function(clientId, userId, path, done){
 exports.putData = function(clientId, userId, path, data, done){
     AppUserData.findOne({userId: userId, clientId: clientId}).exec(function(err, doc){
         if (err) { return done(err);}
+	if (!doc) { return done(err); }
         if (!doc.data) { doc.data = {} }
         var currData = doc.data;
         var pathArray = path.split('/');        
