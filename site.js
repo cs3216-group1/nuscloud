@@ -1,7 +1,10 @@
 var passport = require('passport'),
     login = require('connect-ensure-login'),
     db = require('./db'),
-    register = require('./register');
+    register = require('./register'),
+    crypto = require('crypto'),
+    config = require('./config'),
+    querystring = require('querystring');
 
 exports.index = function(req, res){
     res.render('homepage');
@@ -29,6 +32,83 @@ exports.logout = function(req, res){
         req.logout();
         res.redirect('/');
     });
+}
+
+exports.encryptedLogin = function(req, res){
+    if(!req.query.sso){
+        return res.render('loginEncrypted', {nonce: req.query.nonce});
+    }
+    var payload = req.query.sso;
+    var sig = req.query.sig;
+    var key = config.sso.key;
+    var algorithm = 'sha256';
+    var hash, hmac;
+    hmac = crypto.createHmac(algorithm, key);
+    hmac.setEncoding('hex');
+    hmac.write(payload);
+    hmac.end();
+    hash = hmac.read();
+    if(hash!==sig){
+        res.end();
+    } else {
+        var toSend = {};
+        var input = new Buffer(payload, 'base64').toString('ascii');
+        var nonce = querystring.parse(input).nonce;
+        if(req.isAuthenticated()){
+            toSend.nonce = nonce;
+            toSend.username = req.user.username;
+            toSend.external_id = req.user.userId;
+            toSend.name = req.user.name;
+            toSend.email = req.user.email;
+            var raw_output = querystring.stringify(toSend);
+            var base64_output = new Buffer(raw_output, 'ascii').toString('base64');
+            var output = encodeURIComponent(base64_output);
+           
+            hmac = crypto.createHmac(algorithm, key);
+            hmac.setEncoding('hex');
+            hmac.write(base64_output);
+            hmac.end();
+            hash = hmac.read(); 
+            res.redirect('http://bellcurvehelp.me/session/sso_login?sso=' + output + '&sig=' + hash);
+        } else {
+            res.render('loginEncrypted', {nonce: nonce});
+        }
+    }
+}
+
+exports.processEncryptedLogin = function(req, res, next){
+    passport.authenticate('local', function(err, user, info){
+        if(err) { throw err; }
+        if (!user){
+            console.log(info);
+            var args = querystring.stringify({nonce: req.body.nonce});
+            res.redirect('/loginEncrypted?' + args);
+        } else {
+            req.logIn(user, function(err){
+                if(err) { throw err; }
+                var key = config.sso.key;
+                var algorithm = 'sha256';
+                var hash, hmac;
+                var key = config.sso.key;
+                var toSend = {};
+                toSend.nonce = req.body.nonce;
+                toSend.username = user.username;
+                toSend.external_id = req.user.userId;
+                toSend.name = req.user.name;
+                toSend.email = req.user.email;
+                var raw_output = querystring.stringify(toSend);
+                var base64_output = new Buffer(raw_output, 'ascii').toString('base64');
+                var output = encodeURIComponent(base64_output);
+           
+                hmac = crypto.createHmac(algorithm, key);
+                hmac.setEncoding('hex');
+                hmac.write(base64_output);
+                hmac.end();
+                hash = hmac.read(); 
+                res.redirect('http://bellcurvehelp.me/session/sso_login?sso=' + output + '&sig=' + hash);
+            });
+        }
+    })(req, res, next);
 }
 
 exports.account = [

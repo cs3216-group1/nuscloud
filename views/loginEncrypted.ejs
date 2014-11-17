@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login with NUSCloud</title>
+        <% include common-links.ejs %>
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2>Login with NUSCloud</h2>
+                </div>
+                
+                <form action="/loginEncrypted" method="post" class="login-form">
+	                <div class="control-group">
+	                    <input type="text" class="login-field" value="" 
+                            name="username" id="username"
+                            placeholder="username"/>
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="login-field" value="" 
+                            name="password" id="password"
+                            placeholder="password"/>
+                    </div>
+                 
+	                <input type="hidden" id="nonce" name="nonce"
+                        value="<%= nonce %>">
+                
+                    <input type="submit" value="login" class="nuscloud-btn" />
+                
+                    <a class="login-link" target="_blank" href="/registration">
+                        Not on NUSCloud yet? Register here
+                    </a>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

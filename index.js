@@ -100,6 +100,9 @@ app.post('/loginImplicit', implicit.login);
 app.get('/logoutImplicit', cors(corsOptions), implicit.logout);
 app.get('/api/getloginstatus', cors(corsOptions), api.getLoginStatus);
 
+app.get('/loginEncrypted', site.encryptedLogin);
+app.post('/loginEncrypted', site.processEncryptedLogin);
+
 app.get('/dialog/authorize', oauth2.authorization);
 app.post('/dialog/authorize/decision', oauth2.decision);
 app.post('/oauth/token', oauth2.token);
