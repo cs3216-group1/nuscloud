@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var AppUserDataSchema = new mongoose.Schema({
     userId: String,
     clientId: String,
-    data: mongoose.Schema.Types.Mixed
+    data: mongoose.Schema.Types.Mixed,
+    ivleToken: String
 });
 
 var AppUserData = mongoose.model('Data', AppUserDataSchema);
@@ -127,4 +128,35 @@ exports.exists = function(clientId, userId, done){
             else if (!obj) {return done(null, false); }
             return done(null, true);
         });
-}        
+}
+
+exports.putIvleToken = function(clientId, userId, ivleToken, done){
+    AppUserData.findOne({userId: userId, clientId: clientId}).exec(
+        function(err, doc){
+            if(err) { return done(err); }
+            doc.ivleToken = ivleToken;
+            doc.save(done);
+        }
+    );
+}
+
+exports.getIvleToken = function(clientId, userId, done){
+    AppUserData.findOne({userId: userId, clientId: clientId}).exec(
+        function(err, doc){
+            if(err) { return done(err); }
+            if (!doc.ivleToken){
+                return done(false, true);
+            } else {
+                return done(false, false, doc.ivleToken);
+            }
+        }
+    );
+}
+
+exports.remove = function(clientId, userId, done){
+    AppUserData.remove({clientId: clientId, userId: userId}, done);
+}
+
+exports.removeByClientId = function(clientId, done){
+    AppUserData.remove({clientId: clientId}, done);
+}

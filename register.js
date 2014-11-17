@@ -11,8 +11,6 @@ exports.registerFormUser = function(req, res){
 
 exports.registerUser = function(req, res){
     
-    //TODO Validate username and password
-
     var username = validator.escape(req.body.username);
     var password = validator.escape(req.body.password);
     var name = validator.escape(req.body.name);
@@ -155,6 +153,10 @@ exports.registerClient = [
         var domain = validator.escape(req.body.domain);
         var clientId = utils.uid(12);
         var clientSecret = utils.uid(20);
+        var ivleKey = null;
+        if (req.body.ivleKey){
+            ivleKey = validator.escape(req.body.ivleKey);
+        }
         db.clients.findByClientNamespace(namespace, function(err, client){
             if(client){
                 return res.send("App namespace is already taken", 422);
@@ -168,7 +170,7 @@ exports.registerClient = [
                 if(!validator.isURL(domain)){
                     return res.send("Please enter a valid URL as the domain (include the http://)", 422);
                 }
-                db.clients.save(name, clientId, clientSecret, domain, namespace, req.user.userId, 
+                db.clients.save(name, clientId, clientSecret, domain, namespace, req.user.userId, ivleKey,  
                     function(err, client){
                         return res.redirect('/account/dev');
                     }

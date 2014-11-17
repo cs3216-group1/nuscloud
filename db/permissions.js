@@ -33,3 +33,11 @@ exports.addArray = function(userId, clientId, permArray, done){
         doc.save(done);
     });
 }
+
+exports.remove = function(userId, clientId, done){
+    Permission.remove({userId: userId, clientId: clientId}, done);
+}
+
+exports.removeByClientId = function(clientId, done){
+    Permission.remove({clientId: clientId}, done);
+}

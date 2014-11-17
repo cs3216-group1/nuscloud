@@ -21,7 +21,8 @@ var express = require('express'),
     friends = require('./friends'),
     serveStatic = require('serve-static'),
     favicon = require('serve-favicon'),
-    config = require('./config');
+    config = require('./config'),
+    ivle = require('./ivle');
 
 // Express configuration
 
@@ -78,6 +79,12 @@ app.get('/friends/list', friends.getFriends);
 app.post('/friends/request', friends.sendRequest);
 app.post('/friends/confirm', friends.confirmRequest);
 
+app.get('/ivleform', ivle.ivleform);
+app.get('/ivlelogin', ivle.ivlelogin);
+app.get('/ivletoken', ivle.handleIvleResponse);
+
+app.get('/api/ivle/*', cors(corsOptions), ivle.ivleGet);
+
 app.get('/activate', register.activateUser);
 app.get('/resend-activation-link', register.generateActivationId);
 
@@ -106,7 +113,5 @@ app.get('/api/:userId/friends', cors(corsOptions), friends.apiGetFriends);
 app.get('/api/:userId/:appId/*', cors(corsOptions), api.getUserAppInfo);
 app.post('/api/:userId/:appId/*', cors(corsOptions), api.editUserAppInfo);
 app.delete('/api/:userId/:appId/*', cors(corsOptions), api.deleteUserAppInfo);
-
-
 
 http.createServer(app).listen(3000);

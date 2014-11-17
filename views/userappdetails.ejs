@@ -22,6 +22,8 @@
                             </div>
                             <ul>
                                 <li><h4><b>Permissions:</b> <%= perms[i].permissions %></h4></li>
+                                <li><h4><b>Namespace:</b> <%= perms[i].namespace %></h4></li>
+                                <li><h4><b>Domain:</b> <%= perms[i].domain %></h4></li>
                             </ul>
                             <a class="nuscloud-btn" href="/account/apps/<%= perms[i].clientId %>">View Data</a>
                         </div>
@@ -37,4 +39,3 @@
         </div>
     </body>
 </html>
-

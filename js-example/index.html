@@ -34,6 +34,19 @@
                 console.log(res);
             });
         }
+        function example_ivle_id(){
+            return sdk.get('/ivle/UserID_Get', function(res){
+                console.log(res);
+            });
+        }
+        function example_modules_taken(){
+            sdk.get('/ivle/UserID_Get', function(res){
+                var id = JSON.parse(res).ivleResponse;
+                return sdk.get('/ivle/Modules_Taken?StudentID='+id, function(res){
+                    console.log(res);
+                });
+            });
+        }
         </script>
     </head>
     <body>
@@ -43,6 +56,8 @@
         <button onclick="example_get_all()">All</button>
         <button onclick="example_friends()">Friends</button>
         <button onclick="example_post()">Update</button>
+        <button onclick="example_ivle_id()">IVLE ID</button>
+        <button onclick="example_modules_taken()">Modules</button>
         <button onclick="sdk.logout()">Logout</button>
         <button onclick="example_status()">Status</button>
     </body>

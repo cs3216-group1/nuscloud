@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login to IVLE</title>
+        <% include common-links.ejs %>
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h2>Login to IVLE</h2>
+                    <h4>Allow this app to access your IVLE data</h4>
+                </div>
+                <a href="/ivlelogin?clientId=<%-clientId%>&redirectUri=<%-redirectUri%>&apiKey=<%-apiKey%>" class="nuscloud-btn">
+                    Login to IVLE
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

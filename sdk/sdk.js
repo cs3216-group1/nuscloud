@@ -32,8 +32,27 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                     set_cookie("SDK_" + app_id, JSON.stringify({token: new_token}),
                          7, window.location.origin); 
                     token = new_token;
-                    login_window.close();
-                    if(callback) {callback();}
+                    if(permissions.indexOf("ivle-read") !== -1){
+                        login_window.location = host + "/ivleform?clientId=" + 
+                            app_id + '&redirectUri=' + encodeURIComponent(redirect_url);
+                        var pollTimerIvle = window.setInterval(function(){
+                            try{
+                                var url = login_window.document.URL
+                                if(url.indexOf(redirect_url)!==-1||url.indexOf('undefined')!==-1){
+                                    //Redirect has happened
+                                    window.clearInterval(pollTimerIvle);
+                                    login_window.close();
+                                    if(callback) { return callback();}
+                                }
+                            } catch(e) {
+                                //
+                            }
+                        }, 500);
+                        
+                    } else {
+                        login_window.close();
+                        if(callback) {return callback();}    
+                    }
                 }
             } catch(e) {
                 //Cross Origin Errors will be thrown
@@ -45,7 +64,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
 
     this.logout = function(callback){
         if(token){
-            return ajax.get(host + "/logoutImplicit", {}, function(res){
+            return ajax.get(host + "/logoutImplicit", function(res){
                 if(callback) {return callback(res);}
             });
         } else if (callback) {
@@ -55,7 +74,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
 
     this.getLoginStatus = function(callback){
         if(token){
-            return ajax.get(host + "/api/getloginstatus", {}, function(res){
+            return ajax.get(host + "/api/getloginstatus", function(res){
                 if(callback) {return callback(res);}
             });
         } else if (callback) {
@@ -64,14 +83,14 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
     }
 
     this.get = function(api_path, callback){
-        if(api_path.charAt(0) != "/"){
+        if(api_path.charAt(0) !== "/"){
             api_path = "/" + api_path;
         }
-        if(api_path.charAt(api_path.length - 1) != "/"){
+        if((api_path.charAt(api_path.length - 1) !== "/") && (api_path.indexOf('?') === -1)){
             api_path = api_path + "/";
         }
         if(token){
-            return ajax.get(host + "/api" + api_path, {}, function(res){
+            return ajax.get(host + "/api" + api_path, function(res){
                 //console.log(res);
                 if(callback) {return callback(res);}
             });
@@ -189,12 +208,8 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
         x.send(data)
     };
 
-    ajax.get = function(url, data, callback, sync) {
-        var query = [];
-        for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-        }
-        ajax.send(url + '?' + query.join('&'), callback, 'GET', null, sync)
+    ajax.get = function(url, callback, sync) {
+        ajax.send(url, callback, 'GET', null, sync)
     };
 
     ajax.delete = function(url, data, callback, sync) {

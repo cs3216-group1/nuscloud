@@ -25,6 +25,10 @@
                             </div>
                             <ul>
                                 <li><b>App Namespace:</b> <%= apps[i].namespace %></li>
+                                <li><b>App Domain:</b> <%= apps[i].domain %></li>
+                                <% if (locals.apps[i].ivleKey) { %>
+                                <li><b>IVLE LAPI Key:</b> <%= apps[i].ivleKey %></li>
+                                <% } %>
                                 <li><b>App Id:</b> <%= apps[i].clientId %></li>
                                 <li><b>App Secret:</b> <%= apps[i].clientSecret %></li>
                             </ul>

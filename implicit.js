@@ -25,6 +25,7 @@ exports.login = function(req, res, next){
             scope: req.body.scope
         });
         if (!user){
+            console.log(info);
             res.redirect('/loginImplicit?' + urlParams);
         } else {
             req.logIn(user, function(err) {
