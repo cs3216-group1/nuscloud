@@ -16,8 +16,8 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
 
         var pollTimer = window.setInterval(function(){
             try{
-                var url = login_window.document.URL
-                if(url.indexOf(redirect_url)!=-1){
+                var url = login_window.document.URL;
+                if(url.indexOf(redirect_url)!==-1){
                     //Redirect has happened
                     window.clearInterval(pollTimer);
                     
@@ -38,7 +38,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                         var pollTimerIvle = window.setInterval(function(){
                             try{
                                 var url = login_window.document.URL
-                                if(url.indexOf(redirect_url)!==-1||url.indexOf('undefined')!==-1){
+                                if(url.indexOf(redirect_url)!==-1||url.indexOf(window.location.host)!==-1){
                                     //Redirect has happened
                                     window.clearInterval(pollTimerIvle);
                                     login_window.close();

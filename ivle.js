@@ -67,8 +67,16 @@ exports.handleIvleResponse = [
         var redirectUri = req.query.nc_redirect;
         var userId = req.user.userId;
         db.appUserData.putIvleToken(clientId, userId, token, function(err, obj){
-            if(err) { return res.redirect(redirectUri + '?status=error'); }
-            else { return res.redirect(redirectUri + '?status=ok'); }
+            if(redirectUri){
+                if(err) { return res.redirect(redirectUri + '?status=error'); }
+                else { return res.redirect(redirectUri + '?status=ok'); }
+            } else {
+                db.clients.findByClientId(clientId, function(err, obj){
+                    redirectUri = obj.domain;    
+                    if(err) { return res.redirect(redirectUri + '?status=error'); }
+                    else { return res.redirect(redirectUri + '?status=ok'); }
+                });
+            }
         }); 
     }
 ]
