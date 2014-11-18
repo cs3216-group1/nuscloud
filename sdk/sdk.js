@@ -12,7 +12,7 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
         var url = host + "/authImplicit?client_id=" + app_id + 
                     "&redirect_uri=" + redirect_url + "&scope=" +
                     encodeURIComponent(permissions);
-        var login_window = window.open(url, "Oauth-Login", "width=800, height=400");
+        var login_window = window.open(url, "Oauth-Login", "width=430, height=475");
 
         var pollTimer = window.setInterval(function(){
             try{
