@@ -7,7 +7,7 @@ type: 'DELETE'
 layout: nil
 ---
 
-This method deletes users data for the specified app at the speicified path.
+This method deletes users data for the specified app at the specified path.
 
 ### Request
 

@@ -53,8 +53,8 @@ Permissions that can be requested are:
 - **''info-read''** - to read users basic information (name, username, email)
 - **''friends-read''** - to access friends of the user using the app and allow the user to be accessed by friends using the app
 - **''(app-namespace)-read''** - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)
-- **''ivle-read'' - to read users IVLE information
-- ""''ivle-write'' - to write to IVLE data (send POST requests to IVLE)
+- **''ivle-read''** - to read users IVLE information
+- **''ivle-write''** - to write to IVLE data (send POST requests to IVLE)
 
 ###Requests
 
