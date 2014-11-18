@@ -7,11 +7,11 @@ Unified backend service for NUS Apps with the following features:
  - Data sharing and portability across apps with user permissions
  - Data sharing between friends
 
-A more convenient version of this documentation can be found [here](docs.nuscloud.com)
+A more convenient version of this documentation can be found [here](http://docs.nuscloud.com)
 
 ## Overview
 
-NUSCloud aims to be a collaborative backend service for applications serving the NUS community, hosted [here](nuscloud.com). To achieve this, it exposes an API to applications allowing them to authenticate users, to store data, and for users to share data across applications.
+NUSCloud aims to be a collaborative backend service for applications serving the NUS community, hosted [here](http://nuscloud.com). To achieve this, it exposes an API to applications allowing them to authenticate users, to store data, and for users to share data across applications.
 
 Through this, NUSCloud aims to minimize redundancy both in terms of developer code and user data entry - improving experience across the board and hopefully contributing to boost application development and growth targeted to NUS students. 
 
@@ -77,7 +77,7 @@ Permissions that can be requested are:
 
 ### Requests
 
-Other than [authentication](/#/authentication), all requests through the sdk are made in the following formats:
+Other than authentication, all requests through the sdk are made in the following formats:
 
 ```nuscloud.get(path, callback)```
 
@@ -104,8 +104,6 @@ The first step is to login the user. Call the following Javascript from a login 
 
 ```nuscloud.login(callback)```
 
-Learn more about authentication [here](/#/authentication)
-
 Once the user is successfully logged in, you can make requests to NUSCloud.
 
 By default, your app is able to store, modify and retrieve data for the logged in user.
@@ -114,19 +112,11 @@ To store data for the user in your current app use:
 
 ```nuscloud.post('me/app/', data, callback)```
 
-This is a special form of the api call discussed [here](/#/edit-user-app-data)
-
 To get data for the user in your current app:
 
 ```nuscloud.get('me/app', callback)```
 
-This is a special form of the api call discussed [here](/#/get-user-app-data)
-
 Yup! It is that easy to setup authentication and storage!
-
-To work with friends, see [here](/#/get-friends)
-
-To work with IVLE, see [here](/#/ivle)
 
 ## Getting Started - IVLE
 
@@ -154,7 +144,7 @@ This would allow NUSCloud to make requests to IVLE LAPI on the behalf of your ap
 
 ### Usage
 
-IVLE integration can be done in your app by including the **ivle-read** and/or **ivle-write** in your requested [permissions](/#/javascript/#permissions).
+IVLE integration can be done in your app by including the **ivle-read** and/or **ivle-write** in your requested permissions.
 
 If either of these permissions are requested, when user is logging in to your app for the first time, the user would be asked to authenticate your application to IVLE after allowing permissions. Similar to the normal login flow, the popup will close automatically on succesful authentication.
 
@@ -189,12 +179,6 @@ The format of the response passed to the callback will be the JSON string repres
 
 - **status** is the status
 - **ivleResponse** is an object
-
-### More Details
-
-For GET request to IVLE - see [here](/#/get-ivle)
-
-For POST request to IVLE - see [here](/#/post-ivle)
 
 ## Authenticate - Javascript
 
