@@ -101,7 +101,7 @@ Each response will have a *status* attribute, and other attributes specific to e
 
 The first step is to login the user. Call the following Javascript from a login button of your design and choice:
 
-```nuscloud.login(callback)```
+    nuscloud.login(callback)
 
 Once the user is successfully logged in, you can make requests to NUSCloud.
 
@@ -109,11 +109,11 @@ By default, your app is able to store, modify and retrieve data for the logged i
 
 To store data for the user in your current app use:
 
-```nuscloud.post('me/app/', data, callback)```
+    nuscloud.post('me/app/', data, callback)
 
 To get data for the user in your current app:
 
-```nuscloud.get('me/app', callback)```
+    nuscloud.get('me/app', callback)
 
 Yup! It is that easy to setup authentication and storage!
 
@@ -153,9 +153,9 @@ Your app can now succesfully make requests to IVLE through NUSCloud when the use
 
 To make requests to IVLE, the /ivle enpoint is used:
 
-```nuscloud.get('ivle/:path', callback)```
+    nuscloud.get('ivle/:path', callback)
 
-```nuscloud.post('ivle/:path', data, callback)```
+    nuscloud.post('ivle/:path', data, callback)
 
 The path to be used is based on the UriTemplate of the resource as specified by the [LAPI reference](https://wiki.nus.edu.sg/display/ivlelapi/LAPI+Reference) without the prefix *https://ivle.nus.edu.sg/api/Lapi.svc/*.
 
@@ -165,12 +165,12 @@ To illustrate with an example:
 
 A GET request to:
 
-```https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
-    &AuthToken={System.String}&StudentID={System.String}```
+    https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
+        &AuthToken={System.String}&StudentID={System.String}
 
 can be made via:
 
-```nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);```
+    nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);
 
 ### Responses
 
@@ -185,7 +185,7 @@ The format of the response passed to the callback will be the JSON string repres
 
 Login through the SDK is straightforward. If the nuscloud object is initialized as earlier:
 
-```nuscloud.login(callback)```
+    nuscloud.login(callback)
 
 will initiliaze login. 
 
@@ -197,13 +197,13 @@ No arguments are passed to the callback from login, so it is recommended that [g
 
 Logout is also straightforward
 
-```nuscloud.logout(callback)```
+    nuscloud.logout(callback)
 
 will logout the user from the app by deactivating any access tokens provided.
 
 ### Status
 
-```nuscloud.getLoginStatus(callback)```
+    nuscloud.getLoginStatus(callback)
 
 will provide the users status as a response to the callback. The possible results are:
 
@@ -215,7 +215,7 @@ will provide the users status as a response to the callback. The possible result
 
 This method returns users basic info.
 
-```nuscloud.get('/:userId/userinfo', callback);```
+    nuscloud.get('/:userId/userinfo', callback);
 
 ### Request
 
@@ -231,21 +231,21 @@ Requires **info-read** permission
 
 Sends back an object containing info of the user.
 
-```{
-    status: 'ok',
-    info: {
-        userId: 'abcdefgh12',
-        username: 'johndoe',
-        name: 'John Doe',
-        email: 'johndoe@nus.edu.sg'
+    {
+        status: 'ok',
+        info: {
+            userId: 'abcdefgh12',
+            username: 'johndoe',
+            name: 'John Doe',
+            email: 'johndoe@nus.edu.sg'
+        }
     }
-}```
 
 ## Get app info
 
 This method returns users basic info.
 
-```nuscloud.get('/:appId/appinfo', callback);```
+    nuscloud.get('/:appId/appinfo', callback);
 
 This method returns the basic info of the app which is logged in.
 
@@ -261,19 +261,19 @@ A special case of this request substitutes **app** for **:appId** to get info of
 
 Sends back an object containing info of the user.
 
-```{
-    status: 'ok',
-    info: {
-        name: 'Cool App',
-        namespace: 'coolapp'
+    {
+        status: 'ok',
+        info: {
+            name: 'Cool App',
+            namespace: 'coolapp'
+        }
     }
-}```
 
 ## Get friends
 
 This method returns users friends using the app.
 
-```nuscloud.get('/:userId/friends', callback);```
+    nuscloud.get('/:userId/friends', callback);
 
 ### Request
 
@@ -289,25 +289,25 @@ Requires **friends-read** permission
 
 Sends back an object containing list of friends of the user.
 
-```{
-    status: 'ok'
-    friends: [
-        { 
-            name: 'Good Friend'
-            userId: 'defgh1234'
-        },
-        {
-            name: 'Tom Tomson'
-            userId: 'tomtom123'
-        }
-    ]
-}```
+    {
+        status: 'ok'
+        friends: [
+            { 
+                name: 'Good Friend'
+                userId: 'defgh1234'
+            },
+            {
+                name: 'Tom Tomson'
+                userId: 'tomtom123'
+            }
+        ]
+    }
 
 ## Get user data for app
 
 This method returns users data for the specified app at the specified path.
 
-```nuscloud.get('/:userId/:appId/*', callback);```
+    nuscloud.get('/:userId/:appId/*', callback);
 
 ### Request
 
@@ -330,27 +330,27 @@ Sends back an object containing info stored at the path.
 
 This endpoint supports nesting. In a case where a request to */me/app/example* returns this:
 
-```{
-    status: 'ok',
-    data: {
-        category: 'basket',
-        apples: 3,
-        type: 'fresh',
+    {
+        status: 'ok',
+        data: {
+            category: 'basket',
+            apples: 3,
+            type: 'fresh',
+        }
     }
-}```
 
 Then a request to */me/app/example/apples* would return this:
 
-```{
-    status: 'ok',
-    data: 3 
-}```
+    {
+        status: 'ok',
+        data: 3 
+    }
 
 ## Edit user data for app
 
 This method edits user info for the app at the specified path.
 
-```nuscloud.post('/:userId/:appId/*', data, callback);```
+    nuscloud.post('/:userId/:appId/*', data, callback);
 
 ### Request
 
@@ -366,31 +366,31 @@ As of now, this request can only be made by the currently logged in app to edit 
 
 This endpoint supports nesting. A request to */me/app/example* with this data:
 
-```{
-    data: {
-        apples: 3
+    {
+        data: {
+            apples: 3
+        }
     }
-}```
 
 Is equivalent to this request to */me/app/example/apples*:
 
-```{
-    data: 3 
-}```
+    {
+        data: 3 
+    }
 
 ### Response
 
 The response contains the status of the operation.
 
-```{
-    status: 'ok' 
-}```
+    {
+        status: 'ok' 
+    }
 
 ## Delete user data for app
 
 This method deletes users data for the specified app at the specified path.
 
-```nuscloud.delete('/:userId/:appId/*', callback);```
+    nuscloud.delete('/:userId/:appId/*', callback);
 
 ### Request
 
@@ -406,15 +406,15 @@ As of now, this request can only be made by the currently logged in app.
 
 Returns the status of the delete operation.
 
-```{
-    status: 'ok'
-}```
+    {
+        status: 'ok'
+    }
 
 ## Get IVLE data for user
 
 This method returns users data for the IVLE resource as specified by **path**.
 
-```nuscloud.get('/ivle/:path/*', callback);```
+    nuscloud.get('/ivle/:path/*', callback);
 
 ### Request
 
@@ -432,36 +432,36 @@ To illustrate with examples:
 
 To get NUS ID of user, a GET request to:
 
-```https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey={System.String}
-    &Token={System.String}```
+    https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey={System.String}
+        &Token={System.String}
 
 can be made via:
 
-```nuscloud.get('/ivle/UserID_Get', callback);```
+    nuscloud.get('/ivle/UserID_Get', callback);```
 
 To get modules taken by user, a GET request to:
 
-```https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
-    &AuthToken={System.String}&StudentID={System.String}```
+    https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
+        &AuthToken={System.String}&StudentID={System.String}
 
 can be made via:
 
-```nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);```
+    nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);
 
 ### Response
 
 Sends back an object containing the resource as specified by the **path**.
 
-```{
-    status: 'ok',
-    ivleResponse: {response from IVLE} 
-}```
+    {
+        status: 'ok',
+        ivleResponse: {response from IVLE} 
+    }
 
 ## Edit/Add IVLE data for user
 
 This method edits the IVLE resource of the user as specified by **path**.
 
-```nuscloud.post('/ivle/:path/*', data, callback);```
+    nuscloud.post('/ivle/:path/*', data, callback);
 
 ### Request
 
@@ -479,38 +479,38 @@ To illustrate with examples:
 
 To post a new forum thread (JSON), a POST request to:
 
-```https://ivle.nus.edu.sg/api/Lapi.svc/Forum_PostNewThread_JSON```
+    https://ivle.nus.edu.sg/api/Lapi.svc/Forum_PostNewThread_JSON
 
 with the data:
 
-```{
-    APIKey: {APIKey},
-    AuthToken: {AuthToken},
-    HeadingID: {Heading to which thread is posted},
-    Title: {Title of thread},
-    Reply: {Message body}
-}```
+    {
+        APIKey: {APIKey},
+        AuthToken: {AuthToken},
+        HeadingID: {Heading to which thread is posted},
+        Title: {Title of thread},
+        Reply: {Message body}
+    }
 
 can be made via:
 
-```nuscloud.post('/ivle/Forum_PostNewThread_JSON', callback);```
+    nuscloud.post('/ivle/Forum_PostNewThread_JSON', callback);```
 
 with the data:
 
-```{
-    HeadingID: {Heading to which thread is posted},
-    Title: {Title of thread},
-    Reply: {Message body}
-}```
+    {
+        HeadingID: {Heading to which thread is posted},
+        Title: {Title of thread},
+        Reply: {Message body}
+    }
 
 ### Response
 
 Sends back an object containing the response from IVLE.
 
-```{
-    status: 'ok',
-    ivleResponse: {response from IVLE}
-}```
+    {
+        status: 'ok',
+        ivleResponse: {response from IVLE}
+    }
 
 ## Status Codes
 
