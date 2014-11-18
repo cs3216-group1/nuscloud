@@ -84,6 +84,7 @@ app.get('/ivlelogin', ivle.ivlelogin);
 app.get('/ivletoken', ivle.handleIvleResponse);
 
 app.get('/api/ivle/*', cors(corsOptions), ivle.ivleGet);
+app.post('/api/ivle/*', cors(corsOptions), ivle.ivlePost);
 
 app.get('/activate', register.activateUser);
 app.get('/resend-activation-link', register.generateActivationId);

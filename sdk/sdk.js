@@ -32,7 +32,8 @@ var NUSCloud = function(host, redirect_url, app_id, permissions){
                     set_cookie("SDK_" + app_id, JSON.stringify({token: new_token}),
                          7, window.location.origin); 
                     token = new_token;
-                    if(permissions.indexOf("ivle-read") !== -1){
+                    var perm_array = permissions.split(" ");
+                    if(perm_array.indexOf("ivle-read") !== -1 || perm_array.indexOf("ivle-write") !== -1){
                         login_window.location = host + "/ivleform?clientId=" + 
                             app_id + '&redirectUri=' + encodeURIComponent(redirect_url);
                         var pollTimerIvle = window.setInterval(function(){

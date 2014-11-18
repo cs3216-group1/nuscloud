@@ -121,7 +121,54 @@ exports.ivleGet = function(req, res, next){
                                 try {
                                     ivleResponse = JSON.parse(response.body);
                                 } catch (e){
-                                    return res.status(404).json({status: 'bad request'});
+                                    return res.status(404).json({status: 'bad ivle request'});
+                                }
+                                return res.json({
+                                    status: 'ok', 
+                                    ivleResponse: ivleResponse
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    })(req, res, next);      
+}
+
+exports.ivlePost = function(req, res, next){
+    passport.authenticate('bearer', {session: false}, function(err, user, info){
+        if(err) { return res.status(404).json({status: 'error'}); }
+        if(!user) { return res.status(400).json({status: 'error'}); }
+        if (info.scope.indexOf('ivle-write') === -1){
+            return res.status(401).json({status: 'unauthorized'});
+        } else {
+            db.appUserData.getIvleToken(info.clientId, user.userId, function(err, absent, token){
+                if(err) { return res.status(404).json({status: 'error'}); }
+                if(absent) { return res.status(401).json({status: 'no token'}); }
+                if(token){
+                    db.clients.getIvleKey(info.clientId, function(err, absent, key){
+                        if(err) { return res.status(404).json({status: 'error'}); }
+                        if(absent) { return res.status(401).json({status: 'no apikey'}); }
+                        if(key){
+                            var ivleQuery = req.params[0];
+                            ivleQuery = 'https://ivle.nus.edu.sg/api/Lapi.svc/' + ivleQuery;
+                            if(ivleQuery.charAt(ivleQuery.length-1) === '/'){
+                                ivleQuery = ivleQuery.slice(0, ivleQuery.length - 1);
+                            }
+                            var postObject;
+                            for(var attr in req.body){
+                                postObject[attr] = req.body[attr];
+                            }
+                            postObject['AuthToken'] = token;
+                            postObject['APIKey'] = key;
+                            request.post({url:query, form: postObject}, function(err, response, body){
+                                if(err) { return res.status(404).json({status: 'error'}); }
+                                var ivleResponse = null;
+                                try {
+                                    ivleResponse = JSON.parse(response.body);
+                                } catch (e){
+                                    return res.status(404).json({status: 'bad ivle request'});
                                 }
                                 return res.json({
                                     status: 'ok', 
