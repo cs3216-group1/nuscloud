@@ -26,7 +26,7 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 ###Details
 
-Each element mentioned above is explained below
+Each element mentioned above is explained below:
 
 ####Host
 
@@ -36,7 +36,9 @@ The URL hosting NUSCloud
 
 When the user logs in, he/she is redirected momentarily (in a popup window) to a page of your website momentarily for your site to receive the relevant NUSCloud access token.
 
-The point to note here is to provide a webpage of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues)
+All that is required is to provide a URL of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues). Once the redirect is completed, the sdk will automatically store the access token and close the popup, so the content on the URL is immaterial.
+
+However, it is recommended that the page be as lightweight as possible (or blank) to minimize loading times and thus delays in the login flow.
 
 ####App Id
 
@@ -51,6 +53,8 @@ Permissions that can be requested are:
 - **''info-read''** - to read users basic information (name, username, email)
 - **''friends-read''** - to access friends of the user using the app and allow the user to be accessed by friends using the app
 - **''(app-namespace)-read''** - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)
+- **''ivle-read'' - to read users IVLE information
+- ""''ivle-write'' - to write to IVLE data (send POST requests to IVLE)
 
 ###Requests
 
@@ -62,13 +66,18 @@ Other than [authentication](/#/authentication), all requests through the sdk are
 
 ```nuscloud.delete(path, callback)```
 
-###Responses
-
-The response format will be the JSON string representation of the object types specified in each method where
+The arguments expected above are:
 
 - **path** is a URL path String
 - **data** is an object
 - **callback** is a function that takes in one response argument
+
+###Responses
+
+The response format will be the JSON string representation of the object types specified.
+
+Each response will have a *status* attribute, and other attributes specific to each method.
+
 
 ###Quickstart
 
@@ -98,3 +107,4 @@ Yup! It is that easy to setup authentication and storage!
 
 To work with friends, see [here](/#/get-friends)
 
+To work with IVLE, see [here](/#/ivle)

@@ -1,10 +1,14 @@
 <h3 id="login">Login</h3>
 
-<p>Login through the SDK is straightforward. If initialized as earlier:</p>
+<p>Login through the SDK is straightforward. If the nuscloud object is initialized as earlier:</p>
 
 <p><code>nuscloud.login(callback)</code></p>
 
-<p>will initiliaze login. If the user is already logged in to NUSCloud and has provided all permissions to your app, there will not be any prompt. Else, he will be prompted to login via a NUSCloud popup and to provide any needed permissions.</p>
+<p>will initiliaze login. </p>
+
+<p>If the user is already logged in to NUSCloud and has provided all requested permissions to your app, there will not be any prompt. Else, he will be prompted to login via a NUSCloud popup and further prompted to provide any requested permissions.</p>
+
+<p>No arguments are passed to the callback from login, so it is recommended that <a href="/#status">getLoginStatus</a> be chained after login to confirm success.</p>
 
 <h3 id="logout">Logout</h3>
 
@@ -25,3 +29,4 @@
   <li><strong>{status: unauthorized}</strong> - if the user is logged in and has not authorized the app</li>
   <li><strong>{status: connected}</strong> - user is logged in and app has a valid token</li>
 </ul>
+

@@ -21,6 +21,10 @@
     
   
     
+    <li><a href='#/ivle'>Getting Started - IVLE</a></li>
+    
+  
+    
     <li><a href='#/authentication'>Authenticate - Javascript</a></li>
     
   
@@ -37,11 +41,15 @@
     
   
     
-    <li><a href='#/error-codes'>Statuses</a></li>
+  
+    
+  
+    
+    <li><a href='#/error-codes'>Status Codes</a></li>
     
   
   
-  <li><h2>user + app</h2>
+  <li><h2>app</h2>
     <ul>
     
               
@@ -49,11 +57,7 @@
       
     
               
-        <li class='GET'><a href='#/get-user-app-data'>Get user data for app</a></li>
-              
-        <li class='POST'><a href='#/edit-user-app-data'>Edit user data for app</a></li>
-              
-        <li class='DELETE'><a href='#/delete-user-app-data'>Delete user data for app</a></li>
+        <li class='GET'><a href='#/get-app-info'>Get app info</a></li>
       
     
     </ul>
@@ -75,7 +79,7 @@
     </ul>
   </li>
 
-  <li><h2>app</h2>
+  <li><h2>user + app</h2>
     <ul>
     
               
@@ -83,13 +87,34 @@
       
     
               
-        <li class='GET'><a href='#/get-app-info'>Get app info</a></li>
+        <li class='GET'><a href='#/get-user-app-data'>Get user data for app</a></li>
+              
+        <li class='POST'><a href='#/edit-user-app-data'>Edit user data for app</a></li>
+              
+        <li class='DELETE'><a href='#/delete-user-app-data'>Delete user data for app</a></li>
+      
+    
+    </ul>
+  </li>
+
+  <li><h2>ivle</h2>
+    <ul>
+    
+              
+        <li class=''><a href='#'></a></li>
+      
+    
+              
+        <li class='GET'><a href='#/get-ivle'>Get IVLE data for user</a></li>
+              
+        <li class='POST'><a href='#/post-ivle'>Edit/Add IVLE data for user</a></li>
       
     
     </ul>
   </li>
 
 </ul>
+
 </nav>
 
 <section id='content'>
@@ -99,15 +124,15 @@
     <section class='body'>
       <h3 id="about">About</h3>
 
-<p>NUSCloud aims to be a collaborative backend service for applications serving the NUS community, hosted <a href="nuscloud.jishnumohan.com">here</a>. To achieve this, it exposes an API to applications allowing them to authenticate users, to store data, and for users to share data across applications.</p>
+<p>NUSCloud aims to be a collaborative backend service for applications serving the NUS community, hosted <a href="nuscloud.com">here</a>. To achieve this, it exposes an API to applications allowing them to authenticate users, to store data, and for users to share data across applications.</p>
 
 <p>Through this, NUSCloud aims to minimize redundancy both in terms of developer code and user data entry - improving experience across the board and hopefully contributing to boost application development and growth targeted to NUS students. </p>
 
 <h3 id="api-details">API Details</h3>
 
-<p>NUSCloud exposes a REST-like API which can be accessed via HTTP requests. To simplify integration for client-side focussed applications, the use of the Javascript SDK is recommended.</p>
+<p>NUSCloud exposes a REST-like API which can be accessed via HTTP requests. To simplify integration for client-side applications, the use of the Javascript SDK is strongly recommended.</p>
 
-<p>With the exception of login and logout endpoints, all API paths below are relative to http://nuscloud.jishnumohan.com/api/ for HTTP requests. Details for the Javascript SDK are given in its dedicated section.</p>
+<p>With the exception of login and logout endpoints, all API paths below are relative to <em>http://nuscloud.com/api/</em> for HTTP requests. Details for the Javascript SDK are given in its dedicated section.</p>
 
     </section>
   </article>
@@ -119,14 +144,14 @@
 
 <h3 id="setup">Setup</h3>
 
-<p>You can register a new app <a href="http://nuscloud.jishnumohan.com/client/registration">here</a>. Ensure that a correct domain is provided and take note of your app Id.</p>
+<p>You can register a new app <a href="http://nuscloud.com/client/registration">here</a>. Ensure that a correct domain is provided and take note of your app Id.</p>
 
 <p>Include the following HTML code in your webpage to load the SDK.</p>
 
 <p><code>
-&lt;script src="http://nuscloud.jishnumohan.com/sdk/sdk.js"&gt;&lt;/script&gt;
+&lt;script src="http://nuscloud.com/sdk/sdk.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-var host = "http://nuscloud.jishnumohan.com";
+var host = "http://nuscloud.com";
 var redirect_url = "some-page-on-your-site";
 var app_id = "your-app-id";
 var permissions = "info-read";
@@ -136,7 +161,7 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <h3 id="details">Details</h3>
 
-<p>Each element mentioned above is explained below</p>
+<p>Each element mentioned above is explained below:</p>
 
 <h4 id="host">Host</h4>
 
@@ -146,7 +171,9 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <p>When the user logs in, he/she is redirected momentarily (in a popup window) to a page of your website momentarily for your site to receive the relevant NUSCloud access token.</p>
 
-<p>The point to note here is to provide a webpage of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues)</p>
+<p>All that is required is to provide a URL of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues). Once the redirect is completed, the sdk will automatically store the access token and close the popup, so the content on the URL is immaterial.</p>
+
+<p>However, it is recommended that the page be as lightweight as possible (or blank) to minimize loading times and thus delays in the login flow.</p>
 
 <h4 id="app-id">App Id</h4>
 
@@ -162,11 +189,13 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
   <li><strong>'’info-read’‘</strong> - to read users basic information (name, username, email)</li>
   <li><strong>'’friends-read’‘</strong> - to access friends of the user using the app and allow the user to be accessed by friends using the app</li>
   <li><strong>’‘(app-namespace)-read’‘</strong> - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)</li>
+  <li>**'’ivle-read’’ - to read users IVLE information</li>
+  <li>””'’ivle-write’’ - to write to IVLE data (send POST requests to IVLE)</li>
 </ul>
 
 <h3 id="requests">Requests</h3>
 
-<p>Other than authentication, discussed separately, all requests through the sdk are made in the following formats:</p>
+<p>Other than <a href="/#/authentication">authentication</a>, all requests through the sdk are made in the following formats:</p>
 
 <p><code>nuscloud.get(path, callback)</code></p>
 
@@ -174,13 +203,123 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <p><code>nuscloud.delete(path, callback)</code></p>
 
-<p>where</p>
+<p>The arguments expected above are:</p>
 
 <ul>
   <li><strong>path</strong> is a URL path String</li>
   <li><strong>data</strong> is an object</li>
   <li><strong>callback</strong> is a function that takes in one response argument</li>
 </ul>
+
+<h3 id="responses">Responses</h3>
+
+<p>The response format will be the JSON string representation of the object types specified.</p>
+
+<p>Each response will have a <em>status</em> attribute, and other attributes specific to each method.</p>
+
+<h3 id="quickstart">Quickstart</h3>
+
+<p>The first step is to login the user. Call the following Javascript from a login button of your design and choice:</p>
+
+<p><code>nuscloud.login(callback)</code></p>
+
+<p>Learn more about authentication <a href="/#/authentication">here</a></p>
+
+<p>Once the user is successfully logged in, you can make requests to NUSCloud.</p>
+
+<p>By default, your app is able to store, modify and retrieve data for the logged in user.</p>
+
+<p>To store data for the user in your current app use:</p>
+
+<p><code>nuscloud.post('me/app/', data, callback)</code></p>
+
+<p>This is a special form of the api call discussed <a href="/#/edit-user-app-data">here</a></p>
+
+<p>To get data for the user in your current app:</p>
+
+<p><code>nuscloud.get('me/app', callback)</code></p>
+
+<p>This is a special form of the api call discussed <a href="/#/get-user-app-data">here</a></p>
+
+<p>Yup! It is that easy to setup authentication and storage!</p>
+
+<p>To work with friends, see <a href="/#/get-friends">here</a></p>
+
+<p>To work with IVLE, see <a href="/#/ivle">here</a></p>
+
+    </section>
+  </article>
+
+  <article class=''>
+    <a name='/ivle' href='#/ivle'><h2>Getting Started - IVLE</h2></a>
+    <section class='body'>
+      <p>If you are building an app catering to NUS, you might want to include IVLE Login in order to make use of the data exposed by the <a href="https://wiki.nus.edu.sg/display/ivlelapi/IVLE+LAPI+Overview">IVLE LAPI</a>. NUSCloud supports a convenient way to do this integration.</p>
+
+<h3 id="features">Features</h3>
+
+<p>Using NUSCloud’s IVLE integration offers a number of advantages:
+* Avoid exposing IVLE LAPI Key online. Currently, when building a client side application, your app’s key would have to be included in the Javascript - which is not very secure.
+* Key and Token management - NUSCloud stores your applications API Key and the generated auth tokens as well as token refreshing, removing the need to store user tokens in a database or force user to provide IVLE credentials in each login.
+* Allow your app to benefit from user data in applications like <a href="nusmods.nuscloud.com">NUSMods+</a> as well as IVLE without implementing two separate login flows</p>
+
+<p>How:
+* NUSCloud proxies your IVLE requests by adding the authentication parameters, and provides the responses to your application.</p>
+
+<p>Please note that:
+* NUSCloud does not cache any IVLE data, so speeds might be slow for large requests.
+* IVLE access is limited to the logged-in user. Accessing friends IVLE data is currently not supported.</p>
+
+<h3 id="setup">Setup</h3>
+
+<p>When registering an app <a href="http://nuscloud.com/client/registration">here</a>, enter a valid IVLE LAPI Key. This key can be found <a href="http://ivle.nus.edu.sg/LAPI/default.aspx">here</a>.</p>
+
+<p>This would allow NUSCloud to make requests to IVLE LAPI on the behalf of your app.</p>
+
+<h3 id="usage">Usage</h3>
+
+<p>IVLE integration can be done in your app by including the <strong>ivle-read</strong> and/or <strong>ivle-write</strong> in your requested <a href="/#/javascript/#permissions">permissions</a>.</p>
+
+<p>If either of these permissions are requested, when user is logging in to your app for the first time, the user would be asked to authenticate your application to IVLE after allowing permissions. Similar to the normal login flow, the popup will close automatically on succesful authentication.</p>
+
+<p>Your app can now succesfully make requests to IVLE through NUSCloud when the user is logged in.</p>
+
+<h3 id="requests">Requests</h3>
+
+<p>To make requests to IVLE, the /ivle enpoint is used:</p>
+
+<p><code>nuscloud.get('ivle/:path', callback)</code></p>
+
+<p><code>nuscloud.post('ivle/:path', data, callback)</code></p>
+
+<p>The path to be used is based on the UriTemplate of the resource as specified by the <a href="https://wiki.nus.edu.sg/display/ivlelapi/LAPI+Reference">LAPI reference</a> without the prefix <em>https://ivle.nus.edu.sg/api/Lapi.svc/</em>.</p>
+
+<p>Further, arguments for the APIKey and Token / AuthToken are ignored as these are added by NUSCloud as described earlier.</p>
+
+<p>To illustrate with an example:</p>
+
+<p>A GET request to:</p>
+
+<p><code>https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
+    &amp;AuthToken={System.String}&amp;StudentID={System.String}</code></p>
+
+<p>can be made via:</p>
+
+<p><code>nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);</code></p>
+
+<h3 id="responses">Responses</h3>
+
+<p>The format of the response passed to the callback will be the JSON string representation of the object types specified in each method where:</p>
+
+<ul>
+  <li><strong>status</strong> is the status</li>
+  <li><strong>ivleResponse</strong> is an object</li>
+</ul>
+
+<h3 id="more-details">More Details</h3>
+
+<p>For GET request to IVLE - see <a href="/#/get-ivle">here</a></p>
+
+<p>For POST request to IVLE - see <a href="/#/post-ivle">here</a></p>
 
     </section>
   </article>
@@ -190,11 +329,15 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
     <section class='body'>
       <h3 id="login">Login</h3>
 
-<p>Login through the SDK is straightforward. If initialized as earlier:</p>
+<p>Login through the SDK is straightforward. If the nuscloud object is initialized as earlier:</p>
 
 <p><code>nuscloud.login(callback)</code></p>
 
-<p>will initiliaze login. If the user is already logged in to NUSCloud and has provided all permissions to your app, there will not be any prompt. Else, he will be prompted to login via a NUSCloud popup and to provide any needed permissions.</p>
+<p>will initiliaze login. </p>
+
+<p>If the user is already logged in to NUSCloud and has provided all requested permissions to your app, there will not be any prompt. Else, he will be prompted to login via a NUSCloud popup and further prompted to provide any requested permissions.</p>
+
+<p>No arguments are passed to the callback from login, so it is recommended that <a href="/#status">getLoginStatus</a> be chained after login to confirm success.</p>
 
 <h3 id="logout">Logout</h3>
 
@@ -215,6 +358,7 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
   <li><strong>{status: unauthorized}</strong> - if the user is logged in and has not authorized the app</li>
   <li><strong>{status: connected}</strong> - user is logged in and app has a valid token</li>
 </ul>
+
 
     </section>
   </article>
@@ -342,7 +486,12 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to get info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to get data for current logged in app.</p>
 
-<p>If not made by the app itself, requires <strong>(app-namespace)-read</strong> permission, where (app-namespace) is the namespace of the app whose data would be read</p>
+<p>If not made by the app itself, requires <strong>(app-namespace)-read</strong> permission, where (app-namespace) is the namespace of the app whose data would be read.</p>
+
+<p>To get data of a user who is not logged in, the following conditions must be met:
+* The target user must have signed into the app
+* The target user must be a friend of the logged-in user
+* Both the target user and the logged-in user must have enabled the <strong>friends-read</strong> permission</p>
 
 <h3 id="response">Response</h3>
 
@@ -385,12 +534,12 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 <p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
 
 <ul>
-  <li><strong>Request body sent cannot be empty</strong> and must include a <strong>data</strong> attribute containing the data to be put at the specified path. The data attribute can be either a Javascript Object or a primitive data type (Number, Boolean, String)</li>
+  <li><strong>Request body sent cannot be empty</strong> and must include a <strong>data</strong> attribute containing the data to be put at the specified path. The data attribute is expected to be a Javascript Object. If the SDK is being used, the data attribute can contain any Javascript primitive data type (Number, String, Boolean)</li>
 </ul>
 
-<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to edit info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to edit data for current logged in app.</p>
+<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to edit info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to edit data for currently logged in app.</p>
 
-<p>As of now, this request can only be made by the currently logged in app.</p>
+<p>As of now, this request can only be made by the currently logged in app to edit data of the logged in user.</p>
 
 <p>This endpoint supports nesting. A request to <em>/me/app/example</em> with this data:</p>
 
@@ -449,8 +598,122 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
     </section>
   </article>
 
+  <article class='GET'>
+    <a name='/get-ivle' href='#/get-ivle'><h2><code><b>GET</b> /ivle/:get/*</code> Get IVLE data for user</h2></a>
+    <section class='body'>
+      <p>This method returns users data for the IVLE resource as specified by <strong>path</strong>.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>This request requires user to have granted a <strong>ivle-read</strong> permission and have authenticated the app using IVLE. It also requires that the app have been registered on NUSCloud with a valid IVLE LAPI Key as this will allow NUSCloud to make requests on behalf of the app.</p>
+
+<p>The path to be used is based on the UriTemplate of the resource as specified by the <a href="https://wiki.nus.edu.sg/display/ivlelapi/LAPI+Reference">LAPI reference</a> without the prefix <em>https://ivle.nus.edu.sg/api/Lapi.svc/</em>.</p>
+
+<p>Further, arguments for the APIKey and Token / AuthToken are ignored as these are added by NUSCloud.</p>
+
+<p>To illustrate with examples:</p>
+
+<p>To get NUS ID of user, a GET request to:</p>
+
+<p><code>https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey={System.String}
+    &amp;Token={System.String}</code></p>
+
+<p>can be made via:</p>
+
+<p><code>nuscloud.get('/ivle/UserID_Get', callback);</code></p>
+
+<p>To get modules taken by user, a GET request to:</p>
+
+<p><code>https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey={System.String}
+    &amp;AuthToken={System.String}&amp;StudentID={System.String}</code></p>
+
+<p>can be made via:</p>
+
+<p><code>nuscloud.get('ivle/Modules_Taken?StudentID={String}', callback);</code></p>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back an object containing the resource as specified by the <strong>path</strong>.</p>
+
+<p><code>{
+    status: 'ok',
+    ivleResponse: {response from IVLE}   
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>
+
+    </section>
+  </article>
+
+  <article class='POST'>
+    <a name='/post-ivle' href='#/post-ivle'><h2><code><b>POST</b> /ivle/:path/*</code> Edit/Add IVLE data for user</h2></a>
+    <section class='body'>
+      <p>This method edits the IVLE resource of the user as specified by <strong>path</strong>.</p>
+
+<h3 id="request">Request</h3>
+
+<ul>
+  <li>The headers must include a <strong>valid authentication token</strong>.</li>
+</ul>
+
+<p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
+
+<p>This request requires user to have granted a <strong>ivle-write</strong> permission and have authenticated the app using IVLE. It also requires that the app have been registered on NUSCloud with a valid IVLE LAPI Key as this will allow NUSCloud to make requests on behalf of the app.</p>
+
+<p>The path to be used is based on the UriTemplate of the resource as specified by the <a href="https://wiki.nus.edu.sg/display/ivlelapi/LAPI+Reference">LAPI reference</a> without the prefix <em>https://ivle.nus.edu.sg/api/Lapi.svc/</em>.</p>
+
+<p>Further, arguments for the APIKey and Token / AuthToken are ignored as these are added by NUSCloud.</p>
+
+<p>To illustrate with examples:</p>
+
+<p>To post a new forum thread (JSON), a POST request to:</p>
+
+<p><code>https://ivle.nus.edu.sg/api/Lapi.svc/Forum_PostNewThread_JSON</code></p>
+
+<p>with the data:</p>
+
+<p><code>{
+    APIKey: {APIKey},
+    AuthToken: {AuthToken},
+    HeadingID: {Heading to which thread is posted},
+    Title: {Title of thread},
+    Reply: {Message body}
+}</code></p>
+
+<p>can be made via:</p>
+
+<p><code>nuscloud.post('/ivle/Forum_PostNewThread_JSON', callback);</code></p>
+
+<p>with the data:</p>
+
+<p><code>{
+    HeadingID: {Heading to which thread is posted},
+    Title: {Title of thread},
+    Reply: {Message body}
+}</code></p>
+
+<h3 id="response">Response</h3>
+
+<p>Sends back an object containing the response from IVLE.</p>
+
+<p><code>{
+    status: 'ok',
+    ivleResponse: {response from IVLE}   
+}</code></p>
+
+<p>For errors responses, see the <a href="#/error-codes">status documentation</a>.</p>
+
+    </section>
+  </article>
+
   <article class=''>
-    <a name='/error-codes' href='#/error-codes'><h2>Statuses</h2></a>
+    <a name='/error-codes' href='#/error-codes'><h2>Status Codes</h2></a>
     <section class='body'>
       <p>Each operation returns a response with a status attribute. If the status is <strong>ok</strong>, all is good. Else possible errors are:,</p>
 
@@ -460,6 +723,8 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
   <li><strong>{status: bad endpoint}</strong> - This endpoint does not specify a resource</li>
   <li><strong>{status: unauthorized}</strong> - Absence of required permissions</li>
   <li><strong>{status: absent}</strong> - Recognizes the endpoint, but currently has no data</li>
+  <li><strong>{status: no apikey}</strong> - App does not have stored API Key to make IVLE Request</li>
+  <li><strong>{status: bad ivle request}</strong> - Error thrown from IVLE</li>
 </ul>
 
     </section>

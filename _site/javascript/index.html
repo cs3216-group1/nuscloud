@@ -2,14 +2,14 @@
 
 <h3 id="setup">Setup</h3>
 
-<p>You can register a new app <a href="http://nuscloud.jishnumohan.com/client/registration">here</a>. Ensure that a correct domain is provided and take note of your app Id.</p>
+<p>You can register a new app <a href="http://nuscloud.com/client/registration">here</a>. Ensure that a correct domain is provided and take note of your app Id.</p>
 
 <p>Include the following HTML code in your webpage to load the SDK.</p>
 
 <p><code>
-&lt;script src="http://nuscloud.jishnumohan.com/sdk/sdk.js"&gt;&lt;/script&gt;
+&lt;script src="http://nuscloud.com/sdk/sdk.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-var host = "http://nuscloud.jishnumohan.com";
+var host = "http://nuscloud.com";
 var redirect_url = "some-page-on-your-site";
 var app_id = "your-app-id";
 var permissions = "info-read";
@@ -19,7 +19,7 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <h3 id="details">Details</h3>
 
-<p>Each element mentioned above is explained below</p>
+<p>Each element mentioned above is explained below:</p>
 
 <h4 id="host">Host</h4>
 
@@ -29,7 +29,9 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <p>When the user logs in, he/she is redirected momentarily (in a popup window) to a page of your website momentarily for your site to receive the relevant NUSCloud access token.</p>
 
-<p>The point to note here is to provide a webpage of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues)</p>
+<p>All that is required is to provide a URL of the same domain your app is running in (to receive the access token correctly) and the same domain provided to NUSCloud on registering your app (for security issues). Once the redirect is completed, the sdk will automatically store the access token and close the popup, so the content on the URL is immaterial.</p>
+
+<p>However, it is recommended that the page be as lightweight as possible (or blank) to minimize loading times and thus delays in the login flow.</p>
 
 <h4 id="app-id">App Id</h4>
 
@@ -45,11 +47,13 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
   <li><strong>'’info-read’‘</strong> - to read users basic information (name, username, email)</li>
   <li><strong>'’friends-read’‘</strong> - to access friends of the user using the app and allow the user to be accessed by friends using the app</li>
   <li><strong>’‘(app-namespace)-read’‘</strong> - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)</li>
+  <li>**'’ivle-read’’ - to read users IVLE information</li>
+  <li>””'’ivle-write’’ - to write to IVLE data (send POST requests to IVLE)</li>
 </ul>
 
 <h3 id="requests">Requests</h3>
 
-<p>Other than authentication, discussed separately, all requests through the sdk are made in the following formats:</p>
+<p>Other than <a href="/#/authentication">authentication</a>, all requests through the sdk are made in the following formats:</p>
 
 <p><code>nuscloud.get(path, callback)</code></p>
 
@@ -57,10 +61,46 @@ var nuscloud = new NUSCloud(host, redirect_url, app_id, permissions);
 
 <p><code>nuscloud.delete(path, callback)</code></p>
 
-<p>where</p>
+<p>The arguments expected above are:</p>
 
 <ul>
   <li><strong>path</strong> is a URL path String</li>
   <li><strong>data</strong> is an object</li>
   <li><strong>callback</strong> is a function that takes in one response argument</li>
 </ul>
+
+<h3 id="responses">Responses</h3>
+
+<p>The response format will be the JSON string representation of the object types specified.</p>
+
+<p>Each response will have a <em>status</em> attribute, and other attributes specific to each method.</p>
+
+<h3 id="quickstart">Quickstart</h3>
+
+<p>The first step is to login the user. Call the following Javascript from a login button of your design and choice:</p>
+
+<p><code>nuscloud.login(callback)</code></p>
+
+<p>Learn more about authentication <a href="/#/authentication">here</a></p>
+
+<p>Once the user is successfully logged in, you can make requests to NUSCloud.</p>
+
+<p>By default, your app is able to store, modify and retrieve data for the logged in user.</p>
+
+<p>To store data for the user in your current app use:</p>
+
+<p><code>nuscloud.post('me/app/', data, callback)</code></p>
+
+<p>This is a special form of the api call discussed <a href="/#/edit-user-app-data">here</a></p>
+
+<p>To get data for the user in your current app:</p>
+
+<p><code>nuscloud.get('me/app', callback)</code></p>
+
+<p>This is a special form of the api call discussed <a href="/#/get-user-app-data">here</a></p>
+
+<p>Yup! It is that easy to setup authentication and storage!</p>
+
+<p>To work with friends, see <a href="/#/get-friends">here</a></p>
+
+<p>To work with IVLE, see <a href="/#/ivle">here</a></p>

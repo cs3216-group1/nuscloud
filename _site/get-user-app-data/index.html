@@ -10,7 +10,12 @@
 
 <p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to get info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to get data for current logged in app.</p>
 
-<p>If not made by the app itself, requires <strong>(app-namespace)-read</strong> permission, where (app-namespace) is the namespace of the app whose data would be read</p>
+<p>If not made by the app itself, requires <strong>(app-namespace)-read</strong> permission, where (app-namespace) is the namespace of the app whose data would be read.</p>
+
+<p>To get data of a user who is not logged in, the following conditions must be met:
+* The target user must have signed into the app
+* The target user must be a friend of the logged-in user
+* Both the target user and the logged-in user must have enabled the <strong>friends-read</strong> permission</p>
 
 <h3 id="response">Response</h3>
 

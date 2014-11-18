@@ -9,12 +9,12 @@
 <p>If made through the SDK, this is handled in the SDK itself and can therefore be ignored.</p>
 
 <ul>
-  <li><strong>Request body sent cannot be empty</strong> and must include a <strong>data</strong> attribute containing the data to be put at the specified path. The data attribute can be either a Javascript Object or a primitive data type (Number, Boolean, String)</li>
+  <li><strong>Request body sent cannot be empty</strong> and must include a <strong>data</strong> attribute containing the data to be put at the specified path. The data attribute is expected to be a Javascript Object. If the SDK is being used, the data attribute can contain any Javascript primitive data type (Number, String, Boolean)</li>
 </ul>
 
-<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to edit info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to edit data for current logged in app.</p>
+<p>Special cases of this request substitute <strong>me</strong> for <strong>:userId</strong> to edit info of the logged in user and/or <strong>app</strong> for <strong>:appid</strong> to edit data for currently logged in app.</p>
 
-<p>As of now, this request can only be made by the currently logged in app.</p>
+<p>As of now, this request can only be made by the currently logged in app to edit data of the logged in user.</p>
 
 <p>This endpoint supports nesting. A request to <em>/me/app/example</em> with this data:</p>
 
