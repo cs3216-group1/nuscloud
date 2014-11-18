@@ -210,19 +210,23 @@ exports.authorization = [
         if (!perm){
             db.permissions.save(userId, clientId, function(err, perm){
                 if(err) { throw err;}
+                var scopeInfo = req.oauth2.req.scope.map(generateDescription);
                 return res.render('dialog', {
                     transactionID: req.oauth2.transactionID, 
                     user: req.user, 
                     client: req.oauth2.client,
-                    scope: req.oauth2.req.scope 
+                    scope: req.oauth2.req.scope,
+                    scopeInfo: scopeInfo
                 });
             });
         } else if (perm.permissions.length < scope.length){
+            var scopeInfo = req.oauth2.req.scope.map(generateDescription);
             res.render('dialog', { 
                 transactionID: req.oauth2.transactionID, 
                 user: req.user, 
                 client: req.oauth2.client,
-                scope: req.oauth2.req.scope 
+                scope: req.oauth2.req.scope,
+                scopeInfo: scopeInfo
             });
         } else {
             var allGranted = scope.every(function(requested){
@@ -238,11 +242,13 @@ exports.authorization = [
                 req.body.scope = JSON.stringify(req.oauth2.req.scope);
                 next();                
             } else { 
+                var scopeInfo = req.oauth2.req.scope.map(generateDescription);
                 return res.render('dialog', {
                     transactionID: req.oauth2.transactionID, 
                     user: req.user, 
                     client: req.oauth2.client,
-                    scope: req.oauth2.req.scope 
+                    scope: req.oauth2.req.scope,
+                    scopeInfo: scopeInfo
                 });
             }
         }    
@@ -252,6 +258,34 @@ exports.authorization = [
       return done(null, {scope: req.body.scope});
   })    
 ]
+
+function generateDescription(permission){
+    if (permission === 'ivle-read'){
+        return "This will allow the app to read your IVLE data";
+    } else if (permission === 'info-read'){ 
+        return "This will allow the app to read your basic information";
+    } else if (permission === 'friends-read'){
+        return "This will allow the app to read your friendlist";
+    } else if (permission === 'ivle-write'){
+        return "This will allow the app to write to your IVLE data";
+    } else if (permission.indexOf('read')!==-1){
+        var hyphen = permission.indexOf('-read');
+        var namespace = permission.slice(0, hyphen);
+        db.clients.findByClientNamespace(namespace, function(err, obj){
+            if(err) { return "";}
+            return "This will allow the app to read your " + obj.name + " data";
+        });
+    } else if (permission.indexOf('write')!==-1){
+        var hyphen = permission.indexOf('-write');
+        var namespace = permission.slice(0, hyphen);
+        db.clients.findByClientNamespace(namespace, function(err, obj){
+            if(err) { return "";}
+            return "This will allow the app to write to your " + obj.name + " data";
+        });
+    } else {
+        return "";
+    }
+}
 
 // user decision endpoint
 //
