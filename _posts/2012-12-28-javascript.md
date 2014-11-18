@@ -54,7 +54,7 @@ Permissions that can be requested are:
 
 ###Requests
 
-Other than authentication, discussed separately, all requests through the sdk are made in the following formats:
+Other than [authentication](/#/authentication), all requests through the sdk are made in the following formats:
 
 ```nuscloud.get(path, callback)```
 
@@ -64,10 +64,37 @@ Other than authentication, discussed separately, all requests through the sdk ar
 
 ###Responses
 
-The response format will be the JSON string representation of the object types specified in each method
-
-where
+The response format will be the JSON string representation of the object types specified in each method where
 
 - **path** is a URL path String
 - **data** is an object
 - **callback** is a function that takes in one response argument
+
+###Quickstart
+
+The first step is to login the user. Call the following Javascript from a login button of your design and choice:
+
+```nuscloud.login(callback)```
+
+Learn more about authentication [here](/#/authentication)
+
+Once the user is successfully logged in, you can make requests to NUSCloud.
+
+By default, your app is able to store, modify and retrieve data for the logged in user.
+
+To store data for the user in your current app use:
+
+```nuscloud.post('me/app/', data, callback)```
+
+This is a special form of the api call discussed [here](/#/edit-user-app-data)
+
+To get data for the user in your current app:
+
+```nuscloud.get('me/app', callback)```
+
+This is a special form of the api call discussed [here](/#/get-user-app-data)
+
+Yup! It is that easy to setup authentication and storage!
+
+To work with friends, see [here](/#/get-friends)
+

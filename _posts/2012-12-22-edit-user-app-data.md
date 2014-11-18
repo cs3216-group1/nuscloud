@@ -15,11 +15,11 @@ This method edits user info for the app at the specified path.
 
 If made through the SDK, this is handled in the SDK itself and can therefore be ignored.
 
-* **Request body sent cannot be empty** and must include a **data** attribute containing the data to be put at the specified path. The data attribute can be either a Javascript Object or a primitive data type (Number, Boolean, String)
+* **Request body sent cannot be empty** and must include a **data** attribute containing the data to be put at the specified path. The data attribute is expected to be a Javascript Object. If the SDK is being used, the data attribute can contain any Javascript primitive data type (Number, String, Boolean)
 
-Special cases of this request substitute **me** for **:userId** to edit info of the logged in user and/or **app** for **:appid** to edit data for current logged in app.
+Special cases of this request substitute **me** for **:userId** to edit info of the logged in user and/or **app** for **:appid** to edit data for currently logged in app.
 
-As of now, this request can only be made by the currently logged in app.
+As of now, this request can only be made by the currently logged in app to edit data of the logged in user.
 
 This endpoint supports nesting. A request to */me/app/example* with this data:
 

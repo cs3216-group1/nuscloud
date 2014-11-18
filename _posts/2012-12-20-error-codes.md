@@ -1,5 +1,5 @@
 ---
-title: 'Statuses'
+title: 'Status Codes'
 
 layout: nil
 ---

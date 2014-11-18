@@ -17,7 +17,12 @@ If made through the SDK, this is handled in the SDK itself and can therefore be 
 
 Special cases of this request substitute **me** for **:userId** to get info of the logged in user and/or **app** for **:appid** to get data for current logged in app.
 
-If not made by the app itself, requires **(app-namespace)-read** permission, where (app-namespace) is the namespace of the app whose data would be read
+If not made by the app itself, requires **(app-namespace)-read** permission, where (app-namespace) is the namespace of the app whose data would be read.
+
+To get data of a user who is not logged in, the following conditions must be met:
+* The target user must have signed into the app
+* The target user must be a friend of the logged-in user
+* Both the target user and the logged-in user must have enabled the **friends-read** permission
 
 ### Response
 
