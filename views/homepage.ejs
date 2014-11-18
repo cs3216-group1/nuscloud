@@ -12,7 +12,7 @@
   <body>
     <% include public-navbar.ejs %>
 	<div id="headerwrap">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-6">
 					<h1>Build NUS Apps<br/>
@@ -29,7 +29,7 @@
 	</div>
 
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row mt centered">
 			<div class="col-lg-6 col-lg-offset-3">
 				<h1>NUSCloud</h1><h3>A collaborative backend platform.</h3>
@@ -67,7 +67,7 @@
 	</div>
 
 
-	<div class="container">
+	<div class="container-fluid">
 		<hr>
 		<div class="row centered">
 			<div class="col-lg-6 col-lg-offset-3">
@@ -76,8 +76,6 @@
 			<div class="col-lg-3"></div>
 		</div>
 	</div>
-
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <% include end-js.ejs %>
   </body>
 </html>

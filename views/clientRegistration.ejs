@@ -7,7 +7,8 @@
     </head>
     <body>
         <% include user-navbar.ejs %>
-        <div class="login">
+        <div class="container-fluid">
+        <div class="col-md-6 col-md-offset-3">
             <div class="login-screen">
                 <div class="app-title">
                     <h2>Create an NUSCloud Application</h2>
@@ -41,5 +42,7 @@
                 </form>
             </div>
         </div>
+        </div>
+        <% include end-js.ejs %>
     </body>
 </html>

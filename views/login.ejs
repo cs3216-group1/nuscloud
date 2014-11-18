@@ -6,8 +6,9 @@
         <% include common-links.ejs %>    
     </head>
     <body>
-        <% include public-navbar.ejs %> 
-        <div class="login">
+        <% include public-navbar.ejs %>
+        <div class="container-fluid"> 
+        <div class="col-md-6 col-md-offset-3">
             <div class="login-screen">
                 <div class="app-title">
                     <h2>Login with NUSCloud</h2>
@@ -28,6 +29,8 @@
                 
                 </form>
             </div>
+            </div>
         </div>
+        <% include end-js.ejs %>
     </body>
 </html>
