@@ -72,8 +72,8 @@ Permissions that can be requested are:
 - **''info-read''** - to read users basic information (name, username, email)
 - **''friends-read''** - to access friends of the user using the app and allow the user to be accessed by friends using the app
 - **''(app-namespace)-read''** - this is if your app requires permission to read from other NUSCloud apps, where (app-namespace) refers to the namespace of the app you want to read data from (this is why NUSCloud is collaborative!)
-- **''ivle-read'' - to read users IVLE information
-- ""''ivle-write'' - to write to IVLE data (send POST requests to IVLE)
+- **''ivle-read''** - to read users IVLE information
+- **''ivle-write''** - to write to IVLE data (send POST requests to IVLE)
 
 ### Requests
 
@@ -97,14 +97,11 @@ The response format will be the JSON string representation of the object types s
 
 Each response will have a *status* attribute, and other attributes specific to each method.
 
-
 ### Quickstart
 
 The first step is to login the user. Call the following Javascript from a login button of your design and choice:
 
 ```nuscloud.login(callback)```
-
-Learn more about authentication [here](/#/authentication)
 
 Once the user is successfully logged in, you can make requests to NUSCloud.
 
@@ -114,13 +111,9 @@ To store data for the user in your current app use:
 
 ```nuscloud.post('me/app/', data, callback)```
 
-This is a special form of the api call discussed [here](/#/edit-user-app-data)
-
 To get data for the user in your current app:
 
 ```nuscloud.get('me/app', callback)```
-
-This is a special form of the api call discussed [here](/#/get-user-app-data)
 
 Yup! It is that easy to setup authentication and storage!
 
