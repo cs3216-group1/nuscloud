@@ -104,6 +104,8 @@ The first step is to login the user. Call the following Javascript from a login 
 
 ```nuscloud.login(callback)```
 
+Learn more about authentication [here](/#/authentication)
+
 Once the user is successfully logged in, you can make requests to NUSCloud.
 
 By default, your app is able to store, modify and retrieve data for the logged in user.
@@ -112,9 +114,13 @@ To store data for the user in your current app use:
 
 ```nuscloud.post('me/app/', data, callback)```
 
+This is a special form of the api call discussed [here](/#/edit-user-app-data)
+
 To get data for the user in your current app:
 
 ```nuscloud.get('me/app', callback)```
+
+This is a special form of the api call discussed [here](/#/get-user-app-data)
 
 Yup! It is that easy to setup authentication and storage!
 
