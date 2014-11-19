@@ -47,6 +47,11 @@
                 });
             });
         }
+        function example_nusmods(){
+            sdk.get('me/nusmodswithnuscloud/timetable/2014-2015/sem1:queryString', function(res){
+                console.log(res);
+            });
+        }
         </script>
     </head>
     <body>
@@ -58,6 +63,7 @@
         <button onclick="example_post()">Update</button>
         <button onclick="example_ivle_id()">IVLE ID</button>
         <button onclick="example_modules_taken()">Modules</button>
+        <button onclick="example_nusmods()">NUSMods</button>
         <button onclick="sdk.logout()">Logout</button>
         <button onclick="example_status()">Status</button>
     </body>
